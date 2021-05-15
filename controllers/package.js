@@ -5,7 +5,8 @@ const connection = require('../models/db')
 async function getPackage(req, res) {
   await connection.execute(
     `SELECT package_id, raft.raft_name, package_price, package_value, package_photo, package_description 
-    FROM package, raft WHERE package.raft_id = raft.raft_id`,
+     FROM package, raft 
+     WHERE package.raft_id = raft.raft_id`,
     (error, result, field) => {
       if (error) throw error
       res.send(result)
@@ -22,7 +23,7 @@ async function addPackage(req, res) {
   let despackage = req.body.des
   await connection.execute(
     `INSERT INTO package (package_price, package_photo, package_description, raft_id) 
-    VALUES ('${pricepackage}', '${photopackage}', '${despackage}', '${raftid}')`,
+     VALUES ('${pricepackage}', '${photopackage}', '${despackage}', '${raftid}')`,
     (error, result, field) => {
       if (error) throw error
       res.send(result)
@@ -39,7 +40,10 @@ async function editPackage(req, res) {
   let photopackage = req.body.photo
   let despackage = req.body.des
   await connection.execute(
-    `UPDATE package SET raft_id = '${raftid}', package_price = '${pricepackage}', package_photo = '${photopackage}', package_description = '${despackage}' WHERE package_id = ${id}`,
+    `UPDATE package 
+     SET    raft_id = '${raftid}', package_price = '${pricepackage}', package_photo = '${photopackage}',
+            package_description = '${despackage}' 
+     WHERE  package_id = ${id}`,
     (error, result, field) => {
       if (error) throw error
       res.send(result)

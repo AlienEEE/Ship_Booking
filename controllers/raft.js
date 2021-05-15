@@ -15,7 +15,8 @@ async function addRaft(req, res) {
   let photoraft = req.body.photo
   let desraft = req.body.des
   await connection.execute(
-    `INSERT INTO raft (raft_name, raft_photo, raft_description) VALUES ('${nameraft}', '${photoraft}', '${desraft}')`,
+    `INSERT INTO raft (raft_name, raft_photo, raft_description) 
+     VALUES ('${nameraft}', '${photoraft}', '${desraft}')`,
     (error, result, field) => {
       if (error) throw error
       res.send(result)
@@ -30,7 +31,9 @@ async function editRaft(req, res) {
   let photoraft = req.body.photo
   let desraft = req.body.des
   await connection.execute(
-    `UPDATE raft SET raft_name = '${nameraft}', raft_photo = '${photoraft}', raft_description = '${desraft}' WHERE raft_id = ${id}`,
+    `UPDATE raft 
+     SET    raft_name = '${nameraft}', raft_photo = '${photoraft}', raft_description = '${desraft}' 
+     WHERE  raft_id = ${id}`,
     (error, result, field) => {
       if (error) throw error
       res.send(result)

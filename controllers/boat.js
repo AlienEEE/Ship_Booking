@@ -15,7 +15,8 @@ async function addBoat(req, res) {
   let valueboat = req.body.value
   let nameboat = req.body.name
   await connection.execute(
-    `INSERT INTO boat (boat_name, boat_type, boat_value) VALUES ('${nameboat}', '${typeboat}', '${valueboat}')`,
+    `INSERT INTO boat (boat_name, boat_type, boat_value) 
+     VALUES ('${nameboat}', '${typeboat}', '${valueboat}')`,
     (error, result, field) => {
       if (error) throw error
       res.send(result)
@@ -30,7 +31,8 @@ async function editBoat(req, res) {
   let typeboat = req.body.type
   let valueboat = req.body.value
   await connection.execute(
-    `UPDATE boat SET boat_name = '${nameboat}', boat_type = '${typeboat}', boat_value = '${valueboat}' WHERE boat_id = ${id}`,
+    `UPDATE boat 
+     SET    boat_name = '${nameboat}', boat_type = '${typeboat}', boat_value = '${valueboat}' WHERE boat_id = ${id}`,
     (error, result, field) => {
       if (error) throw error
       res.send(result)

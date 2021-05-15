@@ -15,7 +15,8 @@ async function addDriver(req, res) {
   let sname = req.body.driversname
   let phone = req.body.driverphone
   await connection.execute(
-    `INSERT INTO driver (driver_name,driver_sname,driver_phone) VALUES ('${name}','${sname}','${phone}')`,
+    `INSERT INTO driver (driver_name,driver_sname,driver_phone) 
+     VALUES ('${name}','${sname}','${phone}')`,
     (error, results, flelds) => {
       if (error) throw error
       res.send(results)
@@ -29,7 +30,8 @@ async function editDriver(req, res) {
   let newphone = req.body.driverphone
   let id = req.body.id
   await connection.execute(
-    `UPDATE driver SET driver_name = '${newname}',driver_sname = '${newsname}',driver_phone = '${newphone}' WHERE driver_id = ${id}`,
+    `UPDATE driver 
+     SET    driver_name = '${newname}',driver_sname = '${newsname}',driver_phone = '${newphone}' WHERE driver_id = ${id}`,
     (error, results, flelds) => {
       if (error) throw error
       res.send(results)

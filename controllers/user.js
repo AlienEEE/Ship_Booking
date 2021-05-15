@@ -13,7 +13,8 @@ async function addUser(req, res) {
   let usernameuser = req.body.username
   let passworduser = req.body.password
   await connection.execute(
-    `INSERT INTO user (name,sname,phone,username,password) VALUES ('${nameuser}','${snameuser}','${phoneuser}','${usernameuser}','${passworduser}')`,
+    `INSERT INTO user (name,sname,phone,username,password) 
+     VALUES ('${nameuser}','${snameuser}','${phoneuser}','${usernameuser}','${passworduser}')`,
     (error, results, flelds) => {
       if (error) throw error
       res.send(results)
@@ -30,7 +31,10 @@ async function editUser(req, res) {
   let newpassword = req.body.password
   let id = req.body.id
   await connection.execute(
-    `UPDATE user SET name = '${newname}',sname = '${newsname}',phone = '${newphone}',username = '${newusername}',password = '${newpassword}' WHERE user_id = ${id}`,
+    `UPDATE user 
+     SET    name = '${newname}',sname = '${newsname}',phone = '${newphone}',
+            username = '${newusername}',password = '${newpassword}' 
+     WHERE user_id = ${id}`,
     (error, results, flelds) => {
       if (error) throw error
       res.send(results)
