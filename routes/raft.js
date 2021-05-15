@@ -2,12 +2,15 @@ const { Router } = require('express')
 const router = Router()
 const {
   getRaft,
+  getRafts,
   addRaft,
   editRaft,
   deleteRaft,
 } = require('../controllers/raft')
 
-router.get('/', getRaft)
+router.get('/:id', getRaft)
+
+router.get('/', getRafts)
 
 router.post('/', addRaft)
 

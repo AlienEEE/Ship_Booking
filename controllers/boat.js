@@ -1,8 +1,19 @@
-const { execute } = require('../models/db')
 const connection = require('../models/db')
 
-//check
+//ดึงอันเดียว
 async function getBoat(req, res) {
+  let id = req.params.id
+  await connection.execute(
+    `SELECT * FROM boat 
+     WHERE  boat_id = '${id}'`,
+    (error, result, field) => {
+      if (error) throw error
+      res.send(result)
+    }
+  )
+}
+//ดึงทั้งหมด
+async function getBoats(req, res) {
   await connection.execute('SELECT * FROM boat', (error, result, field) => {
     if (error) throw error
     res.send(result)
@@ -52,4 +63,4 @@ async function deleteBoat(req, res) {
   )
 }
 
-module.exports = { getBoat, addBoat, editBoat, deleteBoat }
+module.exports = { getBoat, getBoats, addBoat, editBoat, deleteBoat }

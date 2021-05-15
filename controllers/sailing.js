@@ -1,5 +1,19 @@
 const connection = require('../models/db')
 async function getSailing(req, res) {
+  let id = req.params.id
+  await connection.execute(
+    `SELECT sailing_id,driver.driver_name,driver.driver_sname,boat.boat_name,boat.boat_type,
+            sailing_date,sailingback_date 
+     FROM   sailing,driver,boat  
+     WHERE  sailing.driver_id = driver.driver_id AND sailing.boat_id = boat.boat_id AND sailing_id = '${id}'  `,
+    (error, results, flelds) => {
+      if (error) throw error
+      res.send(results)
+    }
+  )
+}
+
+async function getSailings(req, res) {
   await connection.execute(
     `SELECT sailing_id,driver.driver_name,driver.driver_sname,boat.boat_name,boat.boat_type,
             sailing_date,sailingback_date 
@@ -55,4 +69,10 @@ async function deleteSailing(req, res) {
   )
 }
 
-module.exports = { getSailing, addSailing, editSailing, deleteSailing }
+module.exports = {
+  getSailing,
+  getSailings,
+  addSailing,
+  editSailing,
+  deleteSailing,
+}

@@ -2,12 +2,15 @@ const { Router } = require('express')
 const router = Router()
 const {
   getPackage,
+  getPackages,
   addPackage,
   editPackage,
   deletePackage,
 } = require('../controllers/package')
 
-router.get('/', getPackage)
+router.get('/:id', getPackage)
+
+router.get('/', getPackages)
 
 router.post('/', addPackage)
 

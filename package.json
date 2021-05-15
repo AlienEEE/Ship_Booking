@@ -10,9 +10,6 @@
     "mysql2": "^2.2.5"
   },
   "scripts": {
-    "new": "nodemon index.js",
-    "driver": "nodemon driver.js",
-    "user": "nodemon user.js",
-    "review": "nodemon review.js"
+    "new": "nodemon index.js"
   }
 }

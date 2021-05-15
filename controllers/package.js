@@ -1,8 +1,20 @@
-const { execute } = require('../models/db')
 const connection = require('../models/db')
 
 //check
 async function getPackage(req, res) {
+  let id = req.params.id
+  await connection.execute(
+    `SELECT package_id, raft.raft_name, package_price, package_value, package_photo, package_description 
+     FROM package, raft 
+     WHERE package.raft_id = raft.raft_id AND package_id = '${id}'`,
+    (error, result, field) => {
+      if (error) throw error
+      res.send(result)
+    }
+  )
+}
+
+async function getPackages(req, res) {
   await connection.execute(
     `SELECT package_id, raft.raft_name, package_price, package_value, package_photo, package_description 
      FROM package, raft 
@@ -63,4 +75,10 @@ async function deletePackage(req, res) {
   )
 }
 
-module.exports = { getPackage, addPackage, editPackage, deletePackage }
+module.exports = {
+  getPackage,
+  getPackages,
+  addPackage,
+  editPackage,
+  deletePackage,
+}

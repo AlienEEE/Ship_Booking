@@ -1,5 +1,17 @@
 const connection = require('../models/db')
 async function getReview(req, res) {
+  let id = req.params.id
+  await connection.execute(
+    `SELECT  review_id,user.username,review_detail,review_rank 
+     FROM    user,review WHERE review.user_id = user.user_id AND review_id = '${id}'`,
+    (error, results, flelds) => {
+      if (error) throw error
+      res.send(results)
+    }
+  )
+}
+
+async function getReviews(req, res) {
   await connection.execute(
     `SELECT  review_id,user.username,review_detail,review_rank 
      FROM    user,review WHERE review.user_id = user.user_id `,
@@ -24,4 +36,4 @@ async function addReview(req, res) {
   )
 }
 
-module.exports = { getReview, addReview }
+module.exports = { getReview, getReviews, addReview }

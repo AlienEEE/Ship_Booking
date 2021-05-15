@@ -3,6 +3,18 @@ const connection = require('../models/db')
 
 //check
 async function getRaft(req, res) {
+  let id = req.params.id
+  await connection.execute(
+    `SELECT * FROM raft 
+     WHERE  raft_id = '${id}'`,
+    (error, result, field) => {
+      if (error) throw error
+      res.send(result)
+    }
+  )
+}
+
+async function getRafts(req, res) {
   await connection.execute('SELECT * FROM raft', (error, result, field) => {
     if (error) throw error
     res.send(result)
@@ -53,4 +65,4 @@ async function deleteRaft(req, res) {
   )
 }
 
-module.exports = { getRaft, addRaft, editRaft, deleteRaft }
+module.exports = { getRaft, getRafts, addRaft, editRaft, deleteRaft }

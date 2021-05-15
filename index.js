@@ -13,7 +13,7 @@ const booking = require('./routes/booking')
 const cors = require('cors')
 
 app.use(cors())
-app.use(express.json()) //คำสั่งอ่าน body
+app.use(express.json())
 app.use('/user', user)
 app.use('/driver', driver)
 app.use('/review', review)

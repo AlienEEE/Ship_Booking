@@ -1,6 +1,18 @@
 const connection = require('../models/db')
-const { execute } = require('../models/db')
+
 async function getDriver(req, res) {
+  let id = req.params.id
+  await connection.execute(
+    `SELECT *  FROM driver 
+     WHERE  driver_id = '${id}'`,
+    (error, results, flelds) => {
+      if (error) throw error
+      res.send(results)
+    }
+  )
+}
+
+async function getDrivers(req, res) {
   await connection.execute(
     'SELECT *  FROM driver',
     (error, results, flelds) => {
@@ -50,4 +62,4 @@ async function deleteDriver(req, res) {
   )
 }
 
-module.exports = { getDriver, addDriver, editDriver, deleteDriver }
+module.exports = { getDriver, getDrivers, addDriver, editDriver, deleteDriver }

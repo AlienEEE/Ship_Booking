@@ -1,5 +1,17 @@
 const connection = require('../models/db')
 async function getUser(req, res) {
+  let id = req.params.id
+  await connection.execute(
+    `SELECT *  FROM user 
+     WHERE  user_id = '${id}'`,
+    (error, results, flelds) => {
+      if (error) throw error
+      res.send(results)
+    }
+  )
+}
+
+async function getUsers(req, res) {
   await connection.execute('SELECT *  FROM user', (error, results, flelds) => {
     if (error) throw error
     res.send(results)
@@ -53,4 +65,4 @@ async function deleteUser(req, res) {
   )
 }
 
-module.exports = { getUser, addUser, editUser, deleteUser }
+module.exports = { getUser, getUsers, addUser, editUser, deleteUser }
