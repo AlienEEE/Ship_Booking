@@ -6,7 +6,6 @@ const {
     addBoat,
     editBoat,
     deleteBoat,
-    uploadBoat,
 } = require('../controllers/boat')
 const multer = require('multer')
 const m = multer({
@@ -14,9 +13,8 @@ const m = multer({
 })
 router.get('/', getBoats)
 router.get('/:id', getBoat)
-router.post('/', addBoat)
+router.post('/', m.single('file'), addBoat)
 router.put('/', editBoat)
 router.delete('/:id', deleteBoat)
-router.post('/:id', m.single('file'), uploadBoat)
 
 module.exports = router

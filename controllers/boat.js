@@ -1,4 +1,5 @@
 const { Boat, Response, Bucket } = require('../models')
+const Upload = require('./upload')
 
 //get
 async function getBoat(req, res) {
@@ -23,7 +24,11 @@ async function getBoats(req, res) {
 
 //add
 async function addBoat(req, res) {
-    const { name, img, type, value } = req.body
+    const { name, type, value } = req.body
+    const file = req.file
+
+    const img = await Upload(file)
+
     try {
         const result = await Boat.create({
             name: name,
@@ -85,52 +90,10 @@ async function deleteBoat(req, res) {
     }
 }
 
-//upload
-async function uploadBoat(req, res) {
-    const boatId = req.params.id
-    if (!req.file) {
-        return res.status(400).send('Error Not found!!')
-    }
-    const blob = Bucket.file(Date.now().toString())
-    const right = blob.createWriteStream({
-        metadata: {
-            contentType: req.file.mimetype,
-        },
-    })
-    right.on('error', (err) => {
-        console.log(err)
-        return res.status(500).send('Error found!!')
-    })
-    right.on('finish', (finish) => {
-        blob.getSignedUrl({
-            action: 'read',
-            expires: new Date().setDate(new Date().getYear() + 5),
-        })
-            .then(async (URL) => {
-                await Boat.update(
-                    {
-                        img: URL[0],
-                    },
-                    {
-                        where: {
-                            id: boatId,
-                        },
-                    }
-                )
-                res.status(200).send('susess')
-            })
-            .catch((err) => {
-                res.status(500).send(err)
-            })
-    })
-    right.end(req.file.buffer)
-}
-
 module.exports = {
     getBoat,
     getBoats,
     addBoat,
     editBoat,
     deleteBoat,
-    uploadBoat,
 }
