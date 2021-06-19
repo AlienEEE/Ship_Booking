@@ -1,13 +1,5 @@
-const { Boat, Response } = require('../models')
-const admin = require('firebase-admin')
+const { Boat, Response, Bucket } = require('../models')
 
-// Initialize firebase admin SDK
-admin.initializeApp({
-    credential: admin.credential.cert(process.env.SERVICE_FIREBASE),
-    storageBucket: 'shipbooking-cc0a7.appspot.com',
-})
-// Cloud storage
-const bucket = admin.storage().bucket()
 //get
 async function getBoat(req, res) {
     const boat = await Boat.findByPk(req.params.id)
@@ -99,11 +91,10 @@ async function uploadBoat(req, res) {
     if (!req.file) {
         return res.status(400).send('Error Not found!!')
     }
-    const blob = bucket.file(new Date().toString())
-    // console.log(req.file.mimetype)
+    const blob = Bucket.file(Date.now().toString())
     const right = blob.createWriteStream({
         metadata: {
-            contentType: 'image/jpeg',
+            contentType: req.file.mimetype,
         },
     })
     right.on('error', (err) => {

@@ -1,4 +1,4 @@
-const { sequelize } = require('./db')
+const { sequelize } = require('./database')
 const { DataTypes } = require('sequelize')
 
 const Driver = sequelize.define('Driver', {

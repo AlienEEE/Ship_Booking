@@ -4,14 +4,14 @@ const Raft = require('./raft')
 const Boat = require('./boat')
 const Driver = require('./driver')
 const Package = require('./driver')
-const Review = require('./review')
 
-const Sequelize = require('./db')
+const Sequelize = require('./database')
 const Response = require('./response')
+
+const Bucket = require('./firebase')
 
 module.exports = {
     User,
-    Review,
     Raft,
     Boat,
     Driver,
@@ -19,4 +19,5 @@ module.exports = {
     Review,
     Sequelize,
     Response,
+    Bucket,
 }
