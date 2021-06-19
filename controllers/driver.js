@@ -1,65 +1,82 @@
-const connection = require('../models/db')
-
+const { Driver, Response } = require('../models')
+//get
 async function getDriver(req, res) {
-  let id = req.params.id
-  await connection.execute(
-    `SELECT *  FROM driver 
-     WHERE  driver_id = '${id}'`,
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
+    const driver = await Driver.findByPk(req.params.id)
+    if (driver === null) {
+        Response.status = 'fail'
+        Response.data = 'Not found!'
+        return res.status(404).json(Response)
+    } else {
+        Response.status = 'success'
+        Response.data = driver
+        res.send(Response)
     }
-  )
 }
-
+//gets
 async function getDrivers(req, res) {
-  await connection.execute(
-    'SELECT *  FROM driver',
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
-    }
-  )
+    const drivers = await Driver.findAll()
+    Response.status = 'success'
+    Response.data = drivers
+    res.send(Response)
 }
-
+//add
 async function addDriver(req, res) {
-  let name = req.body.drivername
-  let sname = req.body.driversname
-  let phone = req.body.driverphone
-  await connection.execute(
-    `INSERT INTO driver (driver_name,driver_sname,driver_phone) 
-     VALUES ('${name}','${sname}','${phone}')`,
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
+    const { name, sname, phone } = req.body
+    try {
+        const result = await Driver.create({
+            name: name,
+            sname: sname,
+            phone: phone,
+        })
+        Response.status = 'success'
+        Response.data = result.dataValues
+        res.send(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
+        return res.status(400).json(Response)
     }
-  )
 }
-
+//edit
 async function editDriver(req, res) {
-  let newname = req.body.drivername
-  let newsname = req.body.driversname
-  let newphone = req.body.driverphone
-  let id = req.body.id
-  await connection.execute(
-    `UPDATE driver 
-     SET    driver_name = '${newname}',driver_sname = '${newsname}',driver_phone = '${newphone}' WHERE driver_id = ${id}`,
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
+    const { name, sname, phone, id } = req.body
+    try {
+        const result = await Driver.update(
+            {
+                name: name,
+                sname: sname,
+                phone: phone,
+            },
+            {
+                where: {
+                    id: id,
+                },
+            }
+        )
+        Response.status = 'success'
+        Response.data = result.dataValues
+        res.send(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
+        return res.status(400).json(Response)
     }
-  )
 }
 
 async function deleteDriver(req, res) {
-  let id = req.body.id
-  await connection.execute(
-    `DELETE  FROM driver WHERE driver_id = ${id}`,
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
+    const driver = await Driver.findByPk(req.params.id)
+    if (driver === null) {
+        Response.status = 'fail'
+        Response.data = 'Not found!'
+        return res.status(404).json(Response)
+    } else {
+        await Driver.destroy({
+            where: {
+                id: req.params.id,
+            },
+        })
+        res.status(204).send()
     }
-  )
 }
 
 module.exports = { getDriver, getDrivers, addDriver, editDriver, deleteDriver }

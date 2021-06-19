@@ -1,11 +1,11 @@
 const express = require('express')
 const router = express.Router()
 const {
-  getSailing,
-  getSailings,
-  addSailing,
-  editSailing,
-  deleteSailing,
+    getSailing,
+    getSailings,
+    addSailing,
+    editSailing,
+    deleteSailing,
 } = require('../controllers/sailing')
 
 router.get('/:id', getSailing)

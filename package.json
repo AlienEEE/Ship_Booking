@@ -1,15 +1,35 @@
 {
-  "name": "project",
-  "version": "1.0.0",
-  "main": "index.js",
-  "license": "MIT",
-  "dependencies": {
-    "cors": "^2.8.5",
-    "dotenv": "^9.0.0",
-    "express": "^4.17.1",
-    "mysql2": "^2.2.5"
-  },
-  "scripts": {
-    "new": "nodemon index.js"
-  }
+    "name": "project",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": {
+        "name": "thanyaratp",
+        "url": "https://github.com/thanyaratp"
+    },
+    "contributors": [
+        {
+            "name": "Mattrixx",
+            "url": "https://github.com/Mattrixxx"
+        }
+    ],
+    "license": "MIT",
+    "dependencies": {
+        "cors": "^2.8.5",
+        "dotenv": "^9.0.0",
+        "express": "^4.17.1",
+        "multer": "^1.4.2",
+        "mysql2": "^2.2.5",
+        "sequelize": "^6.6.2"
+    },
+    "scripts": {
+        "dev": "nodemon index.js"
+    },
+    "devDependencies": {
+        "@google-cloud/storage": "^5.7.0",
+        "express-fileupload": "^1.2.0",
+        "firebase-admin": "^9.4.2",
+        "nodemon": "^2.0.7",
+        "prettier": "2.3.0",
+        "sequelize-cli": "^6.2.0"
+    }
 }

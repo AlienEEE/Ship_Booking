@@ -1,68 +1,85 @@
-const { execute } = require('../models/db')
-const connection = require('../models/db')
-
-//check
+const { Raft, Response } = require('../models')
+//get
 async function getRaft(req, res) {
-  let id = req.params.id
-  await connection.execute(
-    `SELECT * FROM raft 
-     WHERE  raft_id = '${id}'`,
-    (error, result, field) => {
-      if (error) throw error
-      res.send(result)
+    const raft = await Raft.findByPk(req.params.id)
+    if (raft === null) {
+        Response.status = 'fail'
+        Response.data = 'Not found!'
+        return res.status(404).json(Response)
+    } else {
+        Response.status = 'success'
+        Response.data = raft
+        res.send(Response)
     }
-  )
 }
-
+//gets
 async function getRafts(req, res) {
-  await connection.execute('SELECT * FROM raft', (error, result, field) => {
-    if (error) throw error
-    res.send(result)
-  })
+    const rafts = await Raft.findAll()
+    Response.status = 'success'
+    Response.data = rafts
+    res.send(Response)
 }
 
 //add
 async function addRaft(req, res) {
-  let nameraft = req.body.name
-  let photoraft = req.body.photo
-  let desraft = req.body.des
-  await connection.execute(
-    `INSERT INTO raft (raft_name, raft_photo, raft_description) 
-     VALUES ('${nameraft}', '${photoraft}', '${desraft}')`,
-    (error, result, field) => {
-      if (error) throw error
-      res.send(result)
+    const { name, img, des } = req.body
+    try {
+        const result = await Raft.create({
+            name: name,
+            img: img,
+            des: des,
+        })
+        Response.status = 'success'
+        Response.data = result.dataValues
+        res.send(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
+        return res.status(400).json(Response)
     }
-  )
 }
 
 //edit
 async function editRaft(req, res) {
-  let id = req.body.id
-  let nameraft = req.body.name
-  let photoraft = req.body.photo
-  let desraft = req.body.des
-  await connection.execute(
-    `UPDATE raft 
-     SET    raft_name = '${nameraft}', raft_photo = '${photoraft}', raft_description = '${desraft}' 
-     WHERE  raft_id = ${id}`,
-    (error, result, field) => {
-      if (error) throw error
-      res.send(result)
+    const { name, img, des, id } = req.body
+    try {
+        const result = await Raft.update(
+            {
+                name: name,
+                img: img,
+                des: des,
+            },
+            {
+                where: {
+                    id: id,
+                },
+            }
+        )
+        Response.status = 'success'
+        Response.data = result.dataValues
+        res.send(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
+        return res.status(400).json(Response)
     }
-  )
 }
 
 //delete
 async function deleteRaft(req, res) {
-  let id = req.body.id
-  await connection.execute(
-    `DELETE FROM raft WHERE raft_id = ${id}`,
-    (error, result, field) => {
-      if (error) throw error
-      res.send(result)
+    const raft = await Raft.findByPk(req.params.id)
+    if (raft === null) {
+        Response.status = 'fail'
+        Response.data = 'Not found!'
+        return res.status(404).json(Response)
+    } else {
+        await Raft.destroy({
+            where: {
+                id: req.params.id,
+            },
+        })
+        res.status(204).send()
     }
-  )
 }
 
 module.exports = { getRaft, getRafts, addRaft, editRaft, deleteRaft }

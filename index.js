@@ -1,26 +1,26 @@
 require('dotenv').config()
 const express = require('express')
-const app = express()
-const port = process.env.PORT
-const user = require('./routes/user')
-const driver = require('./routes/driver')
-const review = require('./routes/review')
-const sailing = require('./routes/sailing')
-const boat = require('./routes/boat')
-const raft = require('./routes/raft')
-const package = require('./routes/package')
-const booking = require('./routes/booking')
 const cors = require('cors')
+const {
+    User,
+    Review,
+    Raft,
+    Boat,
+    Driver,
+    Package,
+    Review,
+} = require('./routes')
+
+const app = express()
+const port = process.env.PORT_NODE
 
 app.use(cors())
 app.use(express.json())
-app.use('/user', user)
-app.use('/driver', driver)
-app.use('/review', review)
-app.use('/sailing', sailing)
-app.use('/boat', boat)
-app.use('/raft', raft)
-app.use('/package', package)
-app.use('/booking', booking)
+app.use('/user', User)
+app.use('/driver', Driver)
+app.use('/review', Review)
+app.use('/boat', Boat)
+app.use('/raft', Raft)
+app.use('/package', Package)
 
 app.listen(port)

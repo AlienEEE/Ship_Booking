@@ -1,68 +1,86 @@
-const connection = require('../models/db')
+const { User, Response } = require('../models')
+//get
 async function getUser(req, res) {
-  let id = req.params.id
-  await connection.execute(
-    `SELECT *  FROM user 
-     WHERE  user_id = '${id}'`,
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
+    const user = await User.findByPk(req.params.id)
+    if (driver === null) {
+        Response.status = 'fail'
+        Response.data = 'Not found!'
+        return res.status(404).json(Response)
+    } else {
+        Response.status = 'success'
+        Response.data = user
+        res.send(Response)
     }
-  )
 }
-
+//gets
 async function getUsers(req, res) {
-  await connection.execute('SELECT *  FROM user', (error, results, flelds) => {
-    if (error) throw error
-    res.send(results)
-  })
+    const users = await User.findAll()
+    Response.status = 'success'
+    Response.data = users
+    res.send(Response)
 }
-
+//add
 async function addUser(req, res) {
-  let nameuser = req.body.name
-  let snameuser = req.body.sname
-  let phoneuser = req.body.phone
-  let usernameuser = req.body.username
-  let passworduser = req.body.password
-  await connection.execute(
-    `INSERT INTO user (name,sname,phone,username,password) 
-     VALUES ('${nameuser}','${snameuser}','${phoneuser}','${usernameuser}','${passworduser}')`,
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
+    const { name, sname, phone, username, password } = req.body
+    try {
+        const result = await User.create({
+            name: name,
+            sname: sname,
+            phone: phone,
+            username: username,
+            password: password,
+        })
+        Response.status = 'success'
+        Response.data = result.dataValues
+        res.send(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
+        return res.status(400).json(Response)
     }
-  )
 }
-
+//edit
 async function editUser(req, res) {
-  let newname = req.body.name
-  let newsname = req.body.sname
-  let newphone = req.body.phone
-
-  let newusername = req.body.username
-  let newpassword = req.body.password
-  let id = req.body.id
-  await connection.execute(
-    `UPDATE user 
-     SET    name = '${newname}',sname = '${newsname}',phone = '${newphone}',
-            username = '${newusername}',password = '${newpassword}' 
-     WHERE user_id = ${id}`,
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
+    const { name, sname, phone, username, password, id } = req.body
+    try {
+        const result = await User.update(
+            {
+                name: name,
+                sname: sname,
+                phone: phone,
+                username: username,
+                password: password,
+            },
+            {
+                where: {
+                    id: id,
+                },
+            }
+        )
+        Response.status = 'success'
+        Response.data = result.dataValues
+        res.send(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
+        return res.status(400).json(Response)
     }
-  )
 }
-
+//delete
 async function deleteUser(req, res) {
-  let id = req.body.id
-  await connection.execute(
-    `DELETE  FROM user WHERE user_id = ${id}`,
-    (error, results, flelds) => {
-      if (error) throw error
-      res.send(results)
+    const user = await User.findByPk(req.params.id)
+    if (user === null) {
+        Response.status = 'fail'
+        Response.data = 'Not found!'
+        return res.status(404).json(Response)
+    } else {
+        await User.destroy({
+            where: {
+                id: req.params.id,
+            },
+        })
+        res.status(204).send()
     }
-  )
 }
 
 module.exports = { getUser, getUsers, addUser, editUser, deleteUser }
