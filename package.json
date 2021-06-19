@@ -2,6 +2,9 @@
     "name": "project",
     "version": "1.0.0",
     "main": "index.js",
+    "repository": {
+        "url": "https://github.com/AlienEEE/Ship_Booking"
+    },
     "author": {
         "name": "thanyaratp",
         "url": "https://github.com/thanyaratp"
@@ -10,6 +13,10 @@
         {
             "name": "Mattrixx",
             "url": "https://github.com/Mattrixxx"
+        },
+        {
+            "name": "RennyCat",
+            "url": "https://github.com/RNCAT"
         }
     ],
     "license": "MIT",
@@ -25,7 +32,8 @@
         "sequelize": "^6.6.2"
     },
     "scripts": {
-        "dev": "nodemon index.js"
+        "dev": "nodemon index.js",
+        "start": "node index.js"
     },
     "devDependencies": {
         "nodemon": "^2.0.7",
