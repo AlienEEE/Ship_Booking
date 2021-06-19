@@ -1,5 +1,5 @@
 const { Raft, Response } = require('../models')
-//get
+
 async function getRaft(req, res) {
     const raft = await Raft.findByPk(req.params.id)
     if (raft === null) {
@@ -12,7 +12,7 @@ async function getRaft(req, res) {
         res.send(Response)
     }
 }
-//gets
+
 async function getRafts(req, res) {
     const rafts = await Raft.findAll()
     Response.status = 'success'
@@ -20,7 +20,6 @@ async function getRafts(req, res) {
     res.send(Response)
 }
 
-//add
 async function addRaft(req, res) {
     const { name, img, des } = req.body
     try {
@@ -39,7 +38,6 @@ async function addRaft(req, res) {
     }
 }
 
-//edit
 async function editRaft(req, res) {
     const { name, img, des, id } = req.body
     try {
@@ -65,7 +63,6 @@ async function editRaft(req, res) {
     }
 }
 
-//delete
 async function deleteRaft(req, res) {
     const raft = await Raft.findByPk(req.params.id)
     if (raft === null) {
