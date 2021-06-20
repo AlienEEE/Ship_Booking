@@ -1,5 +1,5 @@
 const { User, Response } = require('../models')
-//get
+
 async function getUser(req, res) {
     const user = await User.findByPk(req.params.id)
     if (driver === null) {
@@ -12,14 +12,14 @@ async function getUser(req, res) {
         res.send(Response)
     }
 }
-//gets
+
 async function getUsers(req, res) {
     const users = await User.findAll()
     Response.status = 'success'
     Response.data = users
     res.send(Response)
 }
-//add
+
 async function addUser(req, res) {
     const { name, sname, phone, username, password } = req.body
     try {
@@ -39,7 +39,7 @@ async function addUser(req, res) {
         return res.status(400).json(Response)
     }
 }
-//edit
+
 async function editUser(req, res) {
     const { name, sname, phone, username, password, id } = req.body
     try {
@@ -66,7 +66,7 @@ async function editUser(req, res) {
         return res.status(400).json(Response)
     }
 }
-//delete
+
 async function deleteUser(req, res) {
     const user = await User.findByPk(req.params.id)
     if (user === null) {

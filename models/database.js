@@ -1,20 +1,17 @@
-const mysql = require('mysql2')
-const fs = require('fs')
-// const connection = mysql.createConnection({
-//     host: process.env.HOST_DB,
-//     user: process.env.USER,
-//     password: process.env.PASSWORD_DB,
-//     port: process.env.PORT_DB,
-//     database: 'project',
-//     ssl: {
-//         ca: fs.readFileSync(__dirname + '/ca-certificate.crt'),
-//     },
-// })
 const { Sequelize } = require('sequelize')
-const sequelize = new Sequelize('project', 'root', 'yobyim5598', {
-    host: 'localhost',
+const { ENV } = require('../config')
+
+const sequelize = new Sequelize(ENV.DB_NAME, ENV.DB_USER, ENV.DB_PASS, {
+    host: ENV.DB_HOST,
     dialect: 'mysql',
     logging: false,
 })
 
-module.exports = { sequelize }
+async function syncAll(force = false) {
+    await sequelize.sync({ force: force })
+}
+async function syncOne(model, force = false) {
+    await model.sync({ force: force })
+}
+
+module.exports = { sequelize, syncAll, syncOne }

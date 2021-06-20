@@ -1,5 +1,5 @@
 const { Driver, Response } = require('../models')
-//get
+
 async function getDriver(req, res) {
     const driver = await Driver.findByPk(req.params.id)
     if (driver === null) {
@@ -12,14 +12,14 @@ async function getDriver(req, res) {
         res.send(Response)
     }
 }
-//gets
+
 async function getDrivers(req, res) {
     const drivers = await Driver.findAll()
     Response.status = 'success'
     Response.data = drivers
     res.send(Response)
 }
-//add
+
 async function addDriver(req, res) {
     const { name, sname, phone } = req.body
     try {
@@ -37,7 +37,7 @@ async function addDriver(req, res) {
         return res.status(400).json(Response)
     }
 }
-//edit
+
 async function editDriver(req, res) {
     const { name, sname, phone, id } = req.body
     try {
