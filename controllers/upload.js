@@ -1,9 +1,6 @@
-const { Bucket } = require('../models')
+const { Bucket, Response } = require('../models')
 
 async function Upload(file) {
-    if (!file) {
-        return 'โง่ มึงไม่ส่งไฟล์มา'
-    }
     const blob = Bucket.file(Date.now().toString())
     const expires = new Date().setDate(new Date().getYear() + 5)
 

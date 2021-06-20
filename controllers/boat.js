@@ -1,4 +1,4 @@
-const { Boat, Response, Bucket } = require('../models')
+const { Boat, Response } = require('../models')
 const Upload = require('./upload')
 
 async function getBoat(req, res) {
@@ -25,21 +25,24 @@ async function addBoat(req, res) {
     const { name, type, value } = req.body
     const file = req.file
 
-    const img = await Upload(file)
-
     try {
+        const img = await Upload(file)
+
         const result = await Boat.create({
             name: name,
             img: img,
             type: type,
             value: value,
         })
+
         Response.status = 'success'
         Response.data = result.dataValues
-        res.send(Response)
+
+        res.status(200).send(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors[0]
+
         return res.status(400).json(Response)
     }
 }
