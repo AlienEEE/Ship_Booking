@@ -4,9 +4,17 @@ const cors = require('cors')
 const helmet = require('helmet')
 const compression = require('compression')
 
-const { User, Raft, Boat, Driver } = require('./routes')
+const { Users, Rafts, Boats, Drivers } = require('./routes')
 const { ENV } = require('./config')
-const { syncAll } = require('./models')
+const {
+    syncAll,
+    syncOneToMany,
+    Raft,
+    Package,
+    Boat,
+    Driver,
+    Sailing,
+} = require('./models')
 
 async function startApp() {
     const app = express()
@@ -16,11 +24,14 @@ async function startApp() {
     app.use(helmet())
     app.use(express.json())
 
-    app.use('/user', User)
-    app.use('/driver', Driver)
-    app.use('/boat', Boat)
-    app.use('/raft', Raft)
+    app.use('/user', Users)
+    app.use('/driver', Drivers)
+    app.use('/boat', Boats)
+    app.use('/raft', Rafts)
 
+    await syncOneToMany(Raft, Package, 'raft_id')
+    await syncOneToMany(Driver, Sailing, 'driver_id')
+    await syncOneToMany(Boat, Sailing, 'boat_id')
     await syncAll(true)
 
     try {
