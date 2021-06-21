@@ -1,11 +1,11 @@
-const User = require('./user')
-const Raft = require('./raft')
-const Boat = require('./boat')
-const Driver = require('./driver')
+const Users = require('./user')
+const Rafts = require('./raft')
+const Boats = require('./boat')
+const Drivers = require('./driver')
 
 module.exports = {
-    User,
-    Raft,
-    Boat,
-    Driver,
+    Users,
+    Rafts,
+    Boats,
+    Drivers,
 }
