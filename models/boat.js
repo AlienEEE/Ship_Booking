@@ -6,7 +6,7 @@ const Boat = sequelize.define('Boat', {
         allowNull: false,
     },
     img: {
-        type: DataTypes.STRING,
+        type: DataTypes.TEXT,
         allowNull: true,
     },
     type: {
