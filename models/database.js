@@ -6,7 +6,7 @@ const sequelize = new Sequelize(ENV.DB_NAME, ENV.DB_USER, ENV.DB_PASS, {
     dialect: 'mysql',
     dialectOptions: {
         ssl: {
-            ca: ENV.DB_CA,
+            ca: ENV.DB_CA.replace(/\\n/g, '\n'),
         },
     },
     port: ENV.DB_PORT,
