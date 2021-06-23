@@ -4,6 +4,12 @@ const { ENV } = require('../config')
 const sequelize = new Sequelize(ENV.DB_NAME, ENV.DB_USER, ENV.DB_PASS, {
     host: ENV.DB_HOST,
     dialect: 'mysql',
+    dialectOptions: {
+        ssl: {
+            ca: ENV.DB_CA,
+        },
+    },
+    port: ENV.DB_PORT,
     logging: false,
 })
 

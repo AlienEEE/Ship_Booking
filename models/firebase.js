@@ -1,12 +1,15 @@
 const admin = require('firebase-admin')
 const { ENV } = require('../config')
 
-// Initialize firebase admin SDK
 admin.initializeApp({
-    credential: admin.credential.cert(ENV.FIREBASE_KEY),
-    storageBucket: 'shipbooking-cc0a7.appspot.com',
+    credential: admin.credential.cert({
+        project_id: ENV.FIREBASE_PROJECT_ID,
+        private_key: ENV.FIREBASE_PRIVATE_KEY,
+        client_email: ENV.FIREBASE_CLIENT_EMAIL,
+    }),
+    storageBucket: ENV.FIREBASE_STORAGE_BUCKET,
 })
-// Cloud storage
+
 const Bucket = admin.storage().bucket()
 
 module.exports = Bucket

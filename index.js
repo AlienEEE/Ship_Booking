@@ -35,8 +35,8 @@ async function startApp() {
     await syncAll(true)
 
     try {
-        app.listen(ENV.NODE_PORT)
-        console.log(`Server is running on http://localhost:${ENV.NODE_PORT}`)
+        app.listen(ENV.PORT)
+        console.log(`Server is running on http://localhost:${ENV.PORT}`)
     } catch (error) {
         console.error(error)
     }
