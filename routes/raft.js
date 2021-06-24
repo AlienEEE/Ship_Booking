@@ -7,10 +7,14 @@ const {
     editRaft,
     deleteRaft,
 } = require('../controllers/raft')
+const multer = require('multer')
+const m = multer({
+    storage: multer.memoryStorage(),
+})
 
 router.get('/:id', getRaft)
 router.get('/', getRafts)
-router.post('/', addRaft)
+router.post('/', m.single('file'),addRaft)
 router.put('/', editRaft)
 router.delete('/:id', deleteRaft)
 
