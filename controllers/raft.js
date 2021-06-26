@@ -1,4 +1,5 @@
 const { Raft, Response } = require('../models')
+const Upload = require('./upload')
 
 async function getRaft(req, res) {
     const raft = await Raft.findByPk(req.params.id)
@@ -21,8 +22,10 @@ async function getRafts(req, res) {
 }
 
 async function addRaft(req, res) {
-    const { name, img, des } = req.body
+    const { name, des } = req.body
+    const file = req.file
     try {
+        const img = await Upload(file)
         const result = await Raft.create({
             name: name,
             img: img,
@@ -30,7 +33,7 @@ async function addRaft(req, res) {
         })
         Response.status = 'success'
         Response.data = result.dataValues
-        res.send(Response)
+        res.status(200).send(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors[0]
@@ -39,8 +42,10 @@ async function addRaft(req, res) {
 }
 
 async function editRaft(req, res) {
-    const { name, img, des, id } = req.body
+    const { name, des, id } = req.body
+    const file = req.file
     try {
+        const img = await Upload(file)
         const result = await Raft.update(
             {
                 name: name,

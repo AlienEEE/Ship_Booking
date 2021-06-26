@@ -18,5 +18,9 @@ const Sailing = sequelize.define('Sailing', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
+    booking_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+    },
 })
 module.exports = Sailing

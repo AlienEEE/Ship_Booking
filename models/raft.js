@@ -6,8 +6,8 @@ const Raft = sequelize.define('Raft', {
         allowNull: false,
     },
     img: {
-        type: DataTypes.STRING,
-        allowNull: true,
+        type: DataTypes.TEXT,
+        allowNull: false,
     },
     des: {
         type: DataTypes.STRING,

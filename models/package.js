@@ -10,11 +10,11 @@ const Package = sequelize.define('Package', {
         type: DataTypes.INTEGER,
         allowNull: false,
     },
-    image: {
+    img: {
         type: DataTypes.TEXT,
         allowNull: false,
     },
-    description: {
+    des: {
         type: DataTypes.TEXT,
         allowNull: true,
     },

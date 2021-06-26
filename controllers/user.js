@@ -2,7 +2,7 @@ const { User, Response } = require('../models')
 
 async function getUser(req, res) {
     const user = await User.findByPk(req.params.id)
-    if (driver === null) {
+    if (user === null) {
         Response.status = 'fail'
         Response.data = 'Not found!'
         return res.status(404).json(Response)

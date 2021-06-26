@@ -53,7 +53,7 @@ async function startApp() {
     await syncOneToMany(Booking, Sailing, 'booking_id')
     await syncOneToMany(User, Review, 'user_id')
 
-    await syncAll(true)
+    await syncAll()
 
     try {
         app.listen(ENV.PORT)
