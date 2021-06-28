@@ -113,46 +113,6 @@ async function addBooking(req, res) {
     }
 }
 
-async function editBooking(req, res) {
-    const {
-        value,
-        price,
-        booking_date,
-        travel_date,
-        payment,
-        status,
-        package_id,
-        user_id,
-        id,
-    } = req.body
-    try {
-        const result = await Booking.update(
-            {
-                value: value,
-                price: price,
-                booking_date: booking_date,
-                travel_date: travel_date,
-                payment: payment,
-                status: status,
-                package_id: package_id,
-                user_id: user_id,
-            },
-            {
-                where: {
-                    id: id,
-                },
-            }
-        )
-        Response.status = 'success'
-        Response.data = result
-        res.send(Response)
-    } catch (error) {
-        Response.status = 'fail'
-        Response.data = error.errors
-        return res.status(400).json(Response)
-    }
-}
-
 async function deleteBooking(req, res) {
     const booking = await Booking.findByPk(req.params.id)
     if (booking === null) {
@@ -173,6 +133,6 @@ module.exports = {
     getBooking,
     getBookings,
     addBooking,
-    editBooking,
+
     deleteBooking,
 }

@@ -11,11 +11,11 @@ const Booking = sequelize.define('Booking', {
         allowNull: false,
     },
     booking_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: true,
     },
     travel_date: {
-        type: DataTypes.DATE,
+        type: DataTypes.DATEONLY,
         allowNull: false,
     },
     payment: {

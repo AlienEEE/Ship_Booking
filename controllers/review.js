@@ -73,31 +73,6 @@ async function addReview(req, res) {
     }
 }
 
-async function editReview(req, res) {
-    const { detail, rank, user_id, id } = req.body
-    try {
-        const result = await Review.update(
-            {
-                detail: detail,
-                rank: rank,
-                user_id: user_id,
-            },
-            {
-                where: {
-                    id: id,
-                },
-            }
-        )
-        Response.status = 'success'
-        Response.data = result
-        res.send(Response)
-    } catch (error) {
-        Response.status = 'fail'
-        Response.data = error.errors
-        return res.status(400).json(Response)
-    }
-}
-
 async function deleteReview(req, res) {
     const review = await Review.findByPk(req.params.id)
     if (review === null) {
@@ -113,4 +88,4 @@ async function deleteReview(req, res) {
         res.status(204).send()
     }
 }
-module.exports = { getReview, getReviews, addReview, editReview, deleteReview }
+module.exports = { getReview, getReviews, addReview, deleteReview }
