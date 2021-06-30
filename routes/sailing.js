@@ -13,4 +13,5 @@ router.get('/', getSailings)
 router.post('/', addSailing)
 router.put('/', editSailing)
 router.delete('/:id', deleteSailing)
+
 module.exports = router

@@ -3,22 +3,27 @@ const Upload = require('./upload')
 
 async function getBoat(req, res) {
     const boat = await Boat.findByPk(req.params.id)
+
     if (boat === null) {
         Response.status = 'fail'
         Response.data = 'Not found!'
+
         return res.status(404).json(Response)
     } else {
         Response.status = 'success'
         Response.data = boat
-        res.send(Response)
+
+        res.status(200).json(Response)
     }
 }
 
 async function getBoats(req, res) {
     const boats = await Boat.findAll()
+
     Response.status = 'success'
     Response.data = boats
-    res.send(Response)
+
+    res.status(200).json(Response)
 }
 
 async function addBoat(req, res) {
@@ -27,8 +32,7 @@ async function addBoat(req, res) {
 
     try {
         const img = await Upload(file)
-
-        const result = await Boat.create({
+        const boat = await Boat.create({
             name: name,
             img: img,
             type: type,
@@ -36,9 +40,9 @@ async function addBoat(req, res) {
         })
 
         Response.status = 'success'
-        Response.data = result.dataValues
+        Response.data = boat.dataValues
 
-        res.status(200).send(Response)
+        res.status(201).json(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors[0]
@@ -50,9 +54,10 @@ async function addBoat(req, res) {
 async function editBoat(req, res) {
     const { name, type, value, id } = req.body
     const file = req.file
+
     try {
         const img = await Upload(file)
-        const result = await Boat.update(
+        const boat = await Boat.update(
             {
                 name: name,
                 img: img,
@@ -65,21 +70,26 @@ async function editBoat(req, res) {
                 },
             }
         )
+
         Response.status = 'success'
-        Response.data = result
-        res.send(Response)
+        Response.data = boat
+
+        res.status(200).json(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors[0]
+
         return res.status(400).json(Response)
     }
 }
 
 async function deleteBoat(req, res) {
     const boat = await Boat.findByPk(req.params.id)
+
     if (boat === null) {
         Response.status = 'fail'
         Response.data = 'Not found!'
+
         return res.status(404).json(Response)
     } else {
         await Boat.destroy({
@@ -87,7 +97,8 @@ async function deleteBoat(req, res) {
                 id: req.params.id,
             },
         })
-        res.status(204).send()
+
+        res.status(204).end()
     }
 }
 

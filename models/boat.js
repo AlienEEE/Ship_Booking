@@ -1,5 +1,6 @@
 const { sequelize } = require('./database')
 const { DataTypes } = require('sequelize')
+
 const Boat = sequelize.define('Boat', {
     name: {
         type: DataTypes.STRING,

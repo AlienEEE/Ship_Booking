@@ -8,13 +8,13 @@ const {
     deleteRaft,
 } = require('../controllers/raft')
 const multer = require('multer')
-const m = multer({
+const formData = multer({
     storage: multer.memoryStorage(),
 })
 
 router.get('/:id', getRaft)
 router.get('/', getRafts)
-router.post('/', m.single('file'),addRaft)
+router.post('/', formData.single('file'), addRaft)
 router.put('/', editRaft)
 router.delete('/:id', deleteRaft)
 
