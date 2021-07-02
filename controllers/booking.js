@@ -1,4 +1,4 @@
-const { User, Package, Booking, Response, Review } = require('../models')
+const { User, Package, Booking, Response } = require('../models')
 
 async function getBooking(req, res) {
     const booking = await Booking.findByPk(req.params.id)
@@ -17,6 +17,7 @@ async function getBooking(req, res) {
         value: booking.value,
         booking_date: booking.booking_date,
         travel_date: booking.travel_date,
+        // travel_time: booking.travel_time,
         payment: booking.payment,
         status: booking.status,
         user: {
@@ -56,6 +57,7 @@ async function getBookings(req, res) {
             value: i.value,
             booking_date: i.booking_date,
             travel_date: i.travel_date,
+            // travel_time: i.travel_time,
             payment: i.payment,
             status: i.status,
             user: {
@@ -85,6 +87,7 @@ async function addBooking(req, res) {
         price,
         booking_date,
         travel_date,
+        // travel_time,
         payment,
         status,
         package_id,
@@ -96,11 +99,13 @@ async function addBooking(req, res) {
             price: price,
             booking_date: booking_date,
             travel_date: travel_date,
+            // travel_time: travel_time,
             payment: payment,
             status: status,
             package_id: package_id,
             user_id: user_id,
         })
+        console.log(travel_time)
         Response.status = 'success'
         Response.data = result.dataValues
 
@@ -109,46 +114,6 @@ async function addBooking(req, res) {
         Response.status = 'fail'
         Response.data = error.errors
 
-        return res.status(400).json(Response)
-    }
-}
-
-async function editBooking(req, res) {
-    const {
-        value,
-        price,
-        booking_date,
-        travel_date,
-        payment,
-        status,
-        package_id,
-        user_id,
-        id,
-    } = req.body
-    try {
-        const result = await Booking.update(
-            {
-                value: value,
-                price: price,
-                booking_date: booking_date,
-                travel_date: travel_date,
-                payment: payment,
-                status: status,
-                package_id: package_id,
-                user_id: user_id,
-            },
-            {
-                where: {
-                    id: id,
-                },
-            }
-        )
-        Response.status = 'success'
-        Response.data = result
-        res.send(Response)
-    } catch (error) {
-        Response.status = 'fail'
-        Response.data = error.errors
         return res.status(400).json(Response)
     }
 }
@@ -173,6 +138,6 @@ module.exports = {
     getBooking,
     getBookings,
     addBooking,
-    editBooking,
+
     deleteBooking,
 }

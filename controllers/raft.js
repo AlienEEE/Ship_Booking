@@ -3,40 +3,49 @@ const Upload = require('./upload')
 
 async function getRaft(req, res) {
     const raft = await Raft.findByPk(req.params.id)
+
     if (raft === null) {
         Response.status = 'fail'
         Response.data = 'Not found!'
+
         return res.status(404).json(Response)
     } else {
         Response.status = 'success'
         Response.data = raft
-        res.send(Response)
+
+        res.status(200).json(Response)
     }
 }
 
 async function getRafts(req, res) {
     const rafts = await Raft.findAll()
+
     Response.status = 'success'
     Response.data = rafts
-    res.send(Response)
+
+    res.status(200).json(Response)
 }
 
 async function addRaft(req, res) {
     const { name, des } = req.body
     const file = req.file
+
     try {
         const img = await Upload(file)
-        const result = await Raft.create({
+        const raft = await Raft.create({
             name: name,
             img: img,
             des: des,
         })
+
         Response.status = 'success'
-        Response.data = result.dataValues
-        res.status(200).send(Response)
+        Response.data = raft.dataValues
+
+        res.status(201).json(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors[0]
+
         return res.status(400).json(Response)
     }
 }
@@ -44,9 +53,10 @@ async function addRaft(req, res) {
 async function editRaft(req, res) {
     const { name, des, id } = req.body
     const file = req.file
+
     try {
         const img = await Upload(file)
-        const result = await Raft.update(
+        const raft = await Raft.update(
             {
                 name: name,
                 img: img,
@@ -59,20 +69,24 @@ async function editRaft(req, res) {
             }
         )
         Response.status = 'success'
-        Response.data = result.dataValues
-        res.send(Response)
+        Response.data = raft.dataValues
+
+        res.status(200).json(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors[0]
+
         return res.status(400).json(Response)
     }
 }
 
 async function deleteRaft(req, res) {
     const raft = await Raft.findByPk(req.params.id)
+
     if (raft === null) {
         Response.status = 'fail'
         Response.data = 'Not found!'
+
         return res.status(404).json(Response)
     } else {
         await Raft.destroy({
@@ -80,7 +94,8 @@ async function deleteRaft(req, res) {
                 id: req.params.id,
             },
         })
-        res.status(204).send()
+
+        res.status(204).end()
     }
 }
 

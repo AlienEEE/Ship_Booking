@@ -3,9 +3,11 @@ const Upload = require('./upload')
 
 async function getPackage(req, res) {
     const package = await Package.findByPk(req.params.id)
+
     if (package === null) {
         Response.status = 'fail'
         Response.data = 'Not found!'
+
         return res.status(404).json(Response)
     }
 
@@ -24,19 +26,24 @@ async function getPackage(req, res) {
             des: raft.des,
         },
     }
+
     return res.status(200).json(Response)
 }
 
 async function getPackages(req, res) {
     const packages = await Package.findAll()
+
     if (packages === null) {
         Response.status = 'fail'
         Response.data = 'Not found!'
+
         return res.status(404).json(Response)
     }
+
     let ArrayPackage = []
     for (const i of packages) {
         const raft = await Raft.findByPk(i.raft_id)
+
         Response.status = 'success'
         Response.data = {
             id: i.id,
@@ -51,6 +58,7 @@ async function getPackages(req, res) {
                 des: raft.des,
             },
         }
+
         ArrayPackage.push(Response.data)
     }
 
@@ -59,10 +67,10 @@ async function getPackages(req, res) {
 async function addPackage(req, res) {
     const { price, value, des, raft_id } = req.body
     const file = req.file
+
     try {
         const img = await Upload(file)
-
-        const result = await Package.create({
+        const package = await Package.create({
             price: price,
             value: value,
             des: des,
@@ -71,9 +79,9 @@ async function addPackage(req, res) {
         })
 
         Response.status = 'success'
-        Response.data = result.dataValues
+        Response.data = package.dataValues
 
-        res.status(200).send(Response)
+        res.status(200).json(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors
@@ -85,7 +93,7 @@ async function addPackage(req, res) {
 async function editPackage(req, res) {
     const { price, value, des, img, raft_id, id } = req.body
     try {
-        const result = await Package.update(
+        const package = await Package.update(
             {
                 price: price,
                 value: value,
@@ -101,11 +109,13 @@ async function editPackage(req, res) {
         )
 
         Response.status = 'success'
-        Response.data = result
-        res.send(Response)
+        Response.data = package
+
+        res.status(200).json(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors
+
         return res.status(400).json(Response)
     }
 }
@@ -115,6 +125,7 @@ async function deletePackage(req, res) {
     if (package === null) {
         Response.status = 'fail'
         Response.data = 'Not found!'
+
         return res.status(404).json(Response)
     } else {
         await Package.destroy({
@@ -122,7 +133,8 @@ async function deletePackage(req, res) {
                 id: req.params.id,
             },
         })
-        res.status(204).send()
+
+        res.status(204).end()
     }
 }
 

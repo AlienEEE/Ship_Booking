@@ -10,6 +10,7 @@ async function Upload(file) {
                 contentType: file.mimetype,
             },
         })
+
         write.end(file.buffer)
     } catch (error) {
         return error

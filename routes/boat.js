@@ -8,12 +8,13 @@ const {
     deleteBoat,
 } = require('../controllers/boat')
 const multer = require('multer')
-const m = multer({
+const formData = multer({
     storage: multer.memoryStorage(),
 })
+
 router.get('/', getBoats)
 router.get('/:id', getBoat)
-router.post('/', m.single('file'), addBoat)
+router.post('/', formData.single('file'), addBoat)
 router.put('/', editBoat)
 router.delete('/:id', deleteBoat)
 

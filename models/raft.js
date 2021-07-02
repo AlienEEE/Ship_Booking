@@ -1,5 +1,6 @@
 const { sequelize } = require('./database')
 const { DataTypes } = require('sequelize')
+
 const Raft = sequelize.define('Raft', {
     name: {
         type: DataTypes.STRING,
