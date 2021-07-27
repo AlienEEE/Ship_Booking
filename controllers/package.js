@@ -15,6 +15,7 @@ async function getPackage(req, res) {
     Response.status = 'success'
     Response.data = {
         id: package.id,
+        name: package.name,
         price: package.price,
         value: package.value,
         img: package.img,
@@ -47,6 +48,7 @@ async function getPackages(req, res) {
         Response.status = 'success'
         Response.data = {
             id: i.id,
+            name: i.name,
             price: i.price,
             value: i.value,
             img: i.img,
@@ -71,6 +73,7 @@ async function addPackage(req, res) {
     try {
         const img = await Upload(file)
         const package = await Package.create({
+            name: name,
             price: price,
             value: value,
             des: des,
@@ -95,6 +98,7 @@ async function editPackage(req, res) {
     try {
         const package = await Package.update(
             {
+                name: name,
                 price: price,
                 value: value,
                 des: des,

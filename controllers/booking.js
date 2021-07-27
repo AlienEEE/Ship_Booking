@@ -29,6 +29,7 @@ async function getBooking(req, res) {
         },
         package: {
             id: package.id,
+            name: package.name,
             price: package.price,
             value: package.value,
             img: package.img,
@@ -68,6 +69,7 @@ async function getBookings(req, res) {
             },
             package: {
                 id: package.id,
+                name: package.name,
                 price: package.price,
                 value: package.value,
                 img: package.img,
