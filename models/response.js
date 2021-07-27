@@ -1,4 +1,4 @@
 module.exports = {
-    status: '',
-    data: null,
+  status: '',
+  data: null
 }

@@ -1,11 +1,11 @@
 const { Router } = require('express')
 const router = Router()
 const {
-    getUser,
-    getUsers,
-    addUser,
-    editUser,
-    deleteUser,
+  getUser,
+  getUsers,
+  addUser,
+  editUser,
+  deleteUser
 } = require('../controllers/user')
 
 router.get('/:id', getUser)

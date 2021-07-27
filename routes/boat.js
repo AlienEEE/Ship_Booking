@@ -1,15 +1,15 @@
 const { Router } = require('express')
 const router = Router()
 const {
-    getBoat,
-    getBoats,
-    addBoat,
-    editBoat,
-    deleteBoat,
+  getBoat,
+  getBoats,
+  addBoat,
+  editBoat,
+  deleteBoat
 } = require('../controllers/boat')
 const multer = require('multer')
 const formData = multer({
-    storage: multer.memoryStorage(),
+  storage: multer.memoryStorage()
 })
 
 router.get('/', getBoats)

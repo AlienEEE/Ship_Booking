@@ -1,19 +1,28 @@
 const { sequelize } = require('./database')
 const { DataTypes } = require('sequelize')
 
-const Driver = sequelize.define('Driver', {
+const Driver = sequelize.define(
+  'Driver',
+  {
     name: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      field: 'driver_name',
+      type: DataTypes.STRING(20),
+      allowNull: false
     },
     sname: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      field: 'driver_sname',
+      type: DataTypes.STRING(20),
+      allowNull: false
     },
     phone: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-})
+      field: 'driver_phone',
+      type: DataTypes.STRING(10),
+      allowNull: false
+    }
+  },
+  {
+    tableName: 'drivers'
+  }
+)
 
 module.exports = Driver

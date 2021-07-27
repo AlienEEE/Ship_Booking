@@ -1,26 +1,36 @@
 const { sequelize } = require('./database')
 const { DataTypes } = require('sequelize')
 
-const Package = sequelize.define('Package', {
+const Package = sequelize.define(
+  'Package',
+  {
     price: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
+      field: 'package_price',
+      type: DataTypes.FLOAT,
+      allowNull: false
     },
     value: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      field: 'package_value',
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     img: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      field: 'package_img',
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     des: {
-        type: DataTypes.TEXT,
-        allowNull: true,
+      field: 'package_price',
+      type: DataTypes.TEXT,
+      allowNull: true
     },
     raft_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-})
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  },
+  {
+    tableName: 'packages'
+  }
+)
 module.exports = Package

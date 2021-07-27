@@ -8,7 +8,7 @@ async function getBooking(req, res) {
         return res.status(404).json(Response)
     }
 
-    const user = await User.findByPk(booking.user_id)
+    const user = await User.findByPk(booking.userId)
     const package = await Package.findByPk(booking.package_id)
     Response.status = 'success'
     Response.data = {
@@ -17,7 +17,6 @@ async function getBooking(req, res) {
         value: booking.value,
         booking_date: booking.booking_date,
         travel_date: booking.travel_date,
-        // travel_time: booking.travel_time,
         payment: booking.payment,
         status: booking.status,
         user: {
@@ -26,15 +25,15 @@ async function getBooking(req, res) {
             sname: user.sname,
             phone: user.phone,
             username: user.username,
-            password: user.password,
+            password: user.password
         },
         package: {
             id: package.id,
             price: package.price,
             value: package.value,
             img: package.img,
-            des: package.des,
-        },
+            des: package.des
+        }
     }
     return res.status(200).json(Response)
 }
@@ -57,7 +56,6 @@ async function getBookings(req, res) {
             value: i.value,
             booking_date: i.booking_date,
             travel_date: i.travel_date,
-            // travel_time: i.travel_time,
             payment: i.payment,
             status: i.status,
             user: {
@@ -66,15 +64,15 @@ async function getBookings(req, res) {
                 sname: user.sname,
                 phone: user.phone,
                 username: user.username,
-                password: user.password,
+                password: user.password
             },
             package: {
                 id: package.id,
                 price: package.price,
                 value: package.value,
                 img: package.img,
-                des: package.des,
-            },
+                des: package.des
+            }
         }
         ArrayBooking.push(Response.data)
     }
@@ -85,27 +83,25 @@ async function addBooking(req, res) {
     const {
         value,
         price,
-        booking_date,
-        travel_date,
-        // travel_time,
+        bookingDate,
+        travelDate,
+
         payment,
         status,
-        package_id,
-        user_id,
+        packageId,
+        userId
     } = req.body
     try {
         const result = await Booking.create({
             value: value,
             price: price,
-            booking_date: booking_date,
-            travel_date: travel_date,
-            // travel_time: travel_time,
+            booking_date: bookingDate,
+            travel_date: travelDate,
             payment: payment,
             status: status,
-            package_id: package_id,
-            user_id: user_id,
+            package_id: packageId,
+            user_id: userId
         })
-        console.log(travel_time)
         Response.status = 'success'
         Response.data = result.dataValues
 
@@ -127,8 +123,8 @@ async function deleteBooking(req, res) {
     } else {
         await Booking.destroy({
             where: {
-                id: req.params.id,
-            },
+                id: req.params.id
+            }
         })
         res.status(204).send()
     }
@@ -139,5 +135,5 @@ module.exports = {
     getBookings,
     addBooking,
 
-    deleteBooking,
+    deleteBooking
 }

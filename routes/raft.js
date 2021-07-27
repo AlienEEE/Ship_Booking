@@ -1,15 +1,15 @@
 const { Router } = require('express')
 const router = Router()
 const {
-    getRaft,
-    getRafts,
-    addRaft,
-    editRaft,
-    deleteRaft,
+  getRaft,
+  getRafts,
+  addRaft,
+  editRaft,
+  deleteRaft
 } = require('../controllers/raft')
 const multer = require('multer')
 const formData = multer({
-    storage: multer.memoryStorage(),
+  storage: multer.memoryStorage()
 })
 
 router.get('/:id', getRaft)

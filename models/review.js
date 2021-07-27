@@ -1,19 +1,27 @@
 const { sequelize } = require('./database')
 const { DataTypes } = require('sequelize')
 
-const Review = sequelize.define('Review', {
+const Review = sequelize.define(
+  'Review',
+  {
     detail: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      field: 'review_detail',
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     rank: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
+      field: 'review_rank',
+      type: DataTypes.INTEGER,
+      allowNull: false
     },
     user_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-})
+      type: DataTypes.INTEGER,
+      allowNull: false
+    }
+  },
+  {
+    tableName: 'reviews'
+  }
+)
 
 module.exports = Review

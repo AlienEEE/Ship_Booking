@@ -1,10 +1,10 @@
 const { Router } = require('express')
 const router = Router()
 const {
-    getReview,
-    getReviews,
-    addReview,
-    deleteReview,
+  getReview,
+  getReviews,
+  addReview,
+  deleteReview
 } = require('../controllers/review')
 
 router.get('/:id', getReview)

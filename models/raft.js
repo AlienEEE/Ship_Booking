@@ -1,19 +1,28 @@
 const { sequelize } = require('./database')
 const { DataTypes } = require('sequelize')
 
-const Raft = sequelize.define('Raft', {
+const Raft = sequelize.define(
+  'Raft',
+  {
     name: {
-        type: DataTypes.STRING,
-        allowNull: false,
+      field: 'raft_name',
+      type: DataTypes.STRING(20),
+      allowNull: false
     },
     img: {
-        type: DataTypes.TEXT,
-        allowNull: false,
+      field: 'raft_img',
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     des: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-})
+      field: 'raft_des',
+      type: DataTypes.TEXT,
+      allowNull: false
+    }
+  },
+  {
+    tableName: 'rafts'
+  }
+)
 
 module.exports = Raft

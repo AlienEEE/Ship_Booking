@@ -1,11 +1,11 @@
 const { Router } = require('express')
 const router = Router()
 const {
-    getDriver,
-    getDrivers,
-    addDriver,
-    editDriver,
-    deleteDriver,
+  getDriver,
+  getDrivers,
+  addDriver,
+  editDriver,
+  deleteDriver
 } = require('../controllers/driver')
 
 router.get('/', getDrivers)

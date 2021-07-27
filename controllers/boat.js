@@ -36,7 +36,7 @@ async function addBoat(req, res) {
             name: name,
             img: img,
             type: type,
-            value: value,
+            value: value
         })
 
         Response.status = 'success'
@@ -62,12 +62,12 @@ async function editBoat(req, res) {
                 name: name,
                 img: img,
                 type: type,
-                value: value,
+                value: value
             },
             {
                 where: {
-                    id: id,
-                },
+                    id: id
+                }
             }
         )
 
@@ -94,8 +94,8 @@ async function deleteBoat(req, res) {
     } else {
         await Boat.destroy({
             where: {
-                id: req.params.id,
-            },
+                id: req.params.id
+            }
         })
 
         res.status(204).end()
@@ -107,5 +107,5 @@ module.exports = {
     getBoats,
     addBoat,
     editBoat,
-    deleteBoat,
+    deleteBoat
 }

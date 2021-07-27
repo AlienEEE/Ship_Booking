@@ -23,8 +23,8 @@ async function getPackage(req, res) {
             id: raft.id,
             name: raft.name,
             image: raft.img,
-            des: raft.des,
-        },
+            des: raft.des
+        }
     }
 
     return res.status(200).json(Response)
@@ -55,8 +55,8 @@ async function getPackages(req, res) {
                 id: raft.id,
                 name: raft.name,
                 image: raft.img,
-                des: raft.des,
-            },
+                des: raft.des
+            }
         }
 
         ArrayPackage.push(Response.data)
@@ -65,7 +65,7 @@ async function getPackages(req, res) {
     return res.status(200).json(ArrayPackage)
 }
 async function addPackage(req, res) {
-    const { price, value, des, raft_id } = req.body
+    const { price, value, des, raftId } = req.body
     const file = req.file
 
     try {
@@ -75,7 +75,7 @@ async function addPackage(req, res) {
             value: value,
             des: des,
             img: img,
-            raft_id: raft_id,
+            raft_id: raftId
         })
 
         Response.status = 'success'
@@ -91,7 +91,7 @@ async function addPackage(req, res) {
 }
 
 async function editPackage(req, res) {
-    const { price, value, des, img, raft_id, id } = req.body
+    const { price, value, des, img, raftId, id } = req.body
     try {
         const package = await Package.update(
             {
@@ -99,12 +99,12 @@ async function editPackage(req, res) {
                 value: value,
                 des: des,
                 img: img,
-                raft_id: raft_id,
+                raft_id: raftId
             },
             {
                 where: {
-                    id: id,
-                },
+                    id: id
+                }
             }
         )
 
@@ -130,8 +130,8 @@ async function deletePackage(req, res) {
     } else {
         await Package.destroy({
             where: {
-                id: req.params.id,
-            },
+                id: req.params.id
+            }
         })
 
         res.status(204).end()
@@ -143,5 +143,5 @@ module.exports = {
     getPackages,
     addPackage,
     editPackage,
-    deletePackage,
+    deletePackage
 }

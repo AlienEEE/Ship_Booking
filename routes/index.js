@@ -8,12 +8,12 @@ const Sailings = require('./sailing')
 const Reviews = require('./review')
 
 module.exports = {
-    Users,
-    Rafts,
-    Boats,
-    Drivers,
-    Packages,
-    Bookings,
-    Sailings,
-    Reviews,
+  Users,
+  Rafts,
+  Boats,
+  Drivers,
+  Packages,
+  Bookings,
+  Sailings,
+  Reviews
 }

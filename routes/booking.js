@@ -1,10 +1,10 @@
 const { Router } = require('express')
 const router = Router()
 const {
-    getBooking,
-    getBookings,
-    addBooking,
-    deleteBooking,
+  getBooking,
+  getBookings,
+  addBooking,
+  deleteBooking
 } = require('../controllers/booking')
 
 router.get('/:id', getBooking)
