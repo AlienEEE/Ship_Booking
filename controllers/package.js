@@ -10,7 +10,6 @@ async function getPackage(req, res) {
 
         return res.status(404).json(Response)
     }
-
     const raft = await Raft.findByPk(package.raft_id)
     Response.status = 'success'
     Response.data = {

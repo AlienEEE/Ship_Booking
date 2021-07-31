@@ -9,22 +9,21 @@ const Review = require('./review')
 
 const { sequelize, syncAll, syncOne, syncOneToMany } = require('./database')
 const Response = require('./response')
-
 const Bucket = require('./firebase')
 
 module.exports = {
-  User,
-  Raft,
-  Boat,
-  Driver,
-  Package,
-  Sailing,
-  Booking,
-  Review,
-  sequelize,
-  syncAll,
-  syncOne,
-  syncOneToMany,
-  Response,
-  Bucket
+    User,
+    Raft,
+    Boat,
+    Driver,
+    Package,
+    Sailing,
+    Booking,
+    Review,
+    sequelize,
+    syncAll,
+    syncOne,
+    syncOneToMany,
+    Response,
+    Bucket
 }

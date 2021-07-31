@@ -7,7 +7,6 @@ async function getBooking(req, res) {
         Response.data = 'Not found!'
         return res.status(404).json(Response)
     }
-
     const user = await User.findByPk(booking.userId)
     const package = await Package.findByPk(booking.package_id)
     Response.status = 'success'

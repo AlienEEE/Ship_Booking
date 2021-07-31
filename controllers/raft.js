@@ -1,102 +1,101 @@
 const { Raft, Response } = require('../models')
 const Upload = require('./upload')
 
-async function getRaft (req, res) {
-  const raft = await Raft.findByPk(req.params.id)
+async function getRaft(req, res) {
+    const raft = await Raft.findByPk(req.params.id)
 
-  if (raft === null) {
-    Response.status = 'fail'
-    Response.data = 'Not found!'
+    if (raft === null) {
+        Response.status = 'fail'
+        Response.data = 'Not found!'
 
-    return res.status(404).json(Response)
-  } else {
+        return res.status(404).json(Response)
+    } else {
+        Response.status = 'success'
+        Response.data = raft
+
+        res.status(200).json(Response)
+    }
+}
+
+async function getRafts(req, res) {
+    const rafts = await Raft.findAll()
+
     Response.status = 'success'
-    Response.data = raft
+    Response.data = rafts
 
     res.status(200).json(Response)
-  }
 }
 
-async function getRafts (req, res) {
-  const rafts = await Raft.findAll()
+async function addRaft(req, res) {
+    const { name, des } = req.body
+    const file = req.file
 
-  Response.status = 'success'
-  Response.data = rafts
+    try {
+        const img = await Upload(file)
+        const raft = await Raft.create({
+            name: name,
+            img: img,
+            des: des
+        })
 
-  res.status(200).json(Response)
+        Response.status = 'success'
+        Response.data = raft.dataValues
+
+        res.status(201).json(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
+
+        return res.status(400).json(Response)
+    }
 }
 
-async function addRaft (req, res) {
-  const { name, des } = req.body
-  const file = req.file
+async function editRaft(req, res) {
+    const { name, des, id } = req.body
+    const file = req.file
+    try {
+        const img = await Upload(file)
+        const raft = await Raft.update(
+            {
+                name: name,
+                img: img,
+                des: des
+            },
+            {
+                where: {
+                    id: id
+                }
+            }
+        )
+        Response.status = 'success'
+        Response.data = raft.dataValues
 
-  try {
-    const img = await Upload(file)
-    const raft = await Raft.create({
-      name: name,
-      img: img,
-      des: des
-    })
+        res.status(200).json(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
 
-    Response.status = 'success'
-    Response.data = raft.dataValues
-
-    res.status(201).json(Response)
-  } catch (error) {
-    Response.status = 'fail'
-    Response.data = error.errors[0]
-
-    return res.status(400).json(Response)
-  }
+        return res.status(400).json(Response)
+    }
 }
 
-async function editRaft (req, res) {
-  const { name, des, id } = req.body
-  const file = req.file
+async function deleteRaft(req, res) {
+    const raft = await Raft.findByPk(req.params.id)
 
-  try {
-    const img = await Upload(file)
-    const raft = await Raft.update(
-      {
-        name: name,
-        img: img,
-        des: des
-      },
-      {
-        where: {
-          id: id
-        }
-      }
-    )
-    Response.status = 'success'
-    Response.data = raft.dataValues
+    if (raft === null) {
+        Response.status = 'fail'
+        Response.data = 'Not found!'
 
-    res.status(200).json(Response)
-  } catch (error) {
-    Response.status = 'fail'
-    Response.data = error.errors[0]
+        return res.status(404).json(Response)
+    } else {
+        await Raft.destroy({
+            where: {
+                id: req.params.id
+            }
+        })
 
-    return res.status(400).json(Response)
-  }
-}
-
-async function deleteRaft (req, res) {
-  const raft = await Raft.findByPk(req.params.id)
-
-  if (raft === null) {
-    Response.status = 'fail'
-    Response.data = 'Not found!'
-
-    return res.status(404).json(Response)
-  } else {
-    await Raft.destroy({
-      where: {
-        id: req.params.id
-      }
-    })
-
-    res.status(204).end()
-  }
+        res.status(204).end()
+    }
 }
 
 module.exports = { getRaft, getRafts, addRaft, editRaft, deleteRaft }

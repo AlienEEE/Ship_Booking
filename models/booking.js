@@ -47,5 +47,4 @@ const Booking = sequelize.define(
         tableName: 'bookings'
     }
 )
-
 module.exports = Booking

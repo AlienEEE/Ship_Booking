@@ -82,7 +82,6 @@ async function editBoat(req, res) {
         return res.status(400).json(Response)
     }
 }
-
 async function deleteBoat(req, res) {
     const boat = await Boat.findByPk(req.params.id)
 

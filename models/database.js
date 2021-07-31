@@ -12,7 +12,6 @@ const sequelize = new Sequelize(ENV.DB_NAME, ENV.DB_USER, ENV.DB_PASS, {
     port: ENV.DB_PORT,
     logging: false
 })
-
 async function syncAll(force = false) {
     await sequelize.sync({ force: force })
 }

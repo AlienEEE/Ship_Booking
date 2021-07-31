@@ -1,6 +1,5 @@
 const { sequelize } = require('./database')
 const { DataTypes } = require('sequelize')
-
 const Package = sequelize.define(
     'Package',
     {
