@@ -35,7 +35,7 @@ async function addRaft(req, res) {
         const raft = await Raft.create({
             name: name,
             img: img,
-            des: des
+            des: des,
         })
 
         Response.status = 'success'
@@ -53,18 +53,20 @@ async function addRaft(req, res) {
 async function editRaft(req, res) {
     const { name, des, id } = req.body
     const file = req.file
+
     try {
         const img = await Upload(file)
+
         const raft = await Raft.update(
             {
                 name: name,
                 img: img,
-                des: des
+                des: des,
             },
             {
                 where: {
-                    id: id
-                }
+                    id: id,
+                },
             }
         )
         Response.status = 'success'
@@ -90,8 +92,8 @@ async function deleteRaft(req, res) {
     } else {
         await Raft.destroy({
             where: {
-                id: req.params.id
-            }
+                id: req.params.id,
+            },
         })
 
         res.status(204).end()

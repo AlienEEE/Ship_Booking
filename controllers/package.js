@@ -23,8 +23,8 @@ async function getPackage(req, res) {
             id: raft.id,
             name: raft.name,
             image: raft.img,
-            des: raft.des
-        }
+            des: raft.des,
+        },
     }
 
     return res.status(200).json(Response)
@@ -56,8 +56,8 @@ async function getPackages(req, res) {
                 id: raft.id,
                 name: raft.name,
                 image: raft.img,
-                des: raft.des
-            }
+                des: raft.des,
+            },
         }
 
         ArrayPackage.push(Response.data)
@@ -66,9 +66,9 @@ async function getPackages(req, res) {
     return res.status(200).json(ArrayPackage)
 }
 async function addPackage(req, res) {
-    const { price, value, des, raftId } = req.body
+    const { name, price, value, des, raft_id } = req.body
     const file = req.file
-
+    console.log(name)
     try {
         const img = await Upload(file)
         const package = await Package.create({
@@ -77,7 +77,7 @@ async function addPackage(req, res) {
             value: value,
             des: des,
             img: img,
-            raft_id: raftId
+            raft_id: raft_id,
         })
 
         Response.status = 'success'
@@ -87,13 +87,12 @@ async function addPackage(req, res) {
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors
-
         return res.status(400).json(Response)
     }
 }
 
 async function editPackage(req, res) {
-    const { price, value, des, img, raftId, id } = req.body
+    const { name, price, value, des, img, raftId, id } = req.body
     try {
         const package = await Package.update(
             {
@@ -102,12 +101,12 @@ async function editPackage(req, res) {
                 value: value,
                 des: des,
                 img: img,
-                raft_id: raftId
+                raft_id: raftId,
             },
             {
                 where: {
-                    id: id
-                }
+                    id: id,
+                },
             }
         )
 
@@ -133,8 +132,8 @@ async function deletePackage(req, res) {
     } else {
         await Package.destroy({
             where: {
-                id: req.params.id
-            }
+                id: req.params.id,
+            },
         })
 
         res.status(204).end()
@@ -146,5 +145,5 @@ module.exports = {
     getPackages,
     addPackage,
     editPackage,
-    deletePackage
+    deletePackage,
 }

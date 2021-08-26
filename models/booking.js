@@ -7,44 +7,45 @@ const Booking = sequelize.define(
         value: {
             field: 'booking_value',
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
         },
         price: {
             field: 'booking_price',
             type: DataTypes.FLOAT,
-            allowNull: false
+            allowNull: false,
         },
         booking_date: {
             field: 'booking_date',
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: false,
         },
         travel_date: {
             field: 'travel_date',
             type: DataTypes.DATE,
-            allowNull: false
+            allowNull: false,
         },
         payment: {
             field: 'booking_payment',
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
         },
         status: {
             field: 'booking_status',
-            type: DataTypes.STRING(15),
-            allowNull: false
+            type: DataTypes.STRING(20),
+            allowNull: false,
+            defaultValue: 'กำลังตรวจสอบ',
         },
         package_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
         },
         user_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
-        }
+            allowNull: false,
+        },
     },
     {
-        tableName: 'bookings'
+        tableName: 'bookings',
     }
 )
 module.exports = Booking

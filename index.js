@@ -12,7 +12,7 @@ const {
     Packages,
     Bookings,
     Sailings,
-    Reviews
+    Reviews,
 } = require('./routes')
 const { ENV } = require('./config')
 const {
@@ -25,7 +25,7 @@ const {
     Sailing,
     Booking,
     Review,
-    User
+    User,
 } = require('./models')
 
 async function startApp() {
@@ -53,7 +53,7 @@ async function startApp() {
     await syncOneToMany(Booking, Sailing, 'booking_id')
     await syncOneToMany(User, Review, 'user_id')
 
-    await syncAll(true)
+    await syncAll()
 
     try {
         app.listen(ENV.PORT)

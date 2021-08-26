@@ -21,8 +21,8 @@ async function getReview(req, res) {
             sname: user.sname,
             phone: user.phone,
             username: user.username,
-            password: user.password
-        }
+            password: user.password,
+        },
     }
 
     return res.status(200).json(Response)
@@ -53,8 +53,8 @@ async function getReviews(req, res) {
                 sname: user.sname,
                 phone: user.phone,
                 username: user.username,
-                password: user.password
-            }
+                password: user.password,
+            },
         }
 
         ArrayReview.push(Response.data)
@@ -64,13 +64,13 @@ async function getReviews(req, res) {
 }
 
 async function addReview(req, res) {
-    const { detail, rank, userId } = req.body
+    const { detail, rank, user_id } = req.body
 
     try {
         const review = await Review.create({
             detail: detail,
             rank: rank,
-            user_id: userId
+            user_id: user_id,
         })
 
         Response.status = 'success'
@@ -96,8 +96,8 @@ async function deleteReview(req, res) {
     } else {
         await Review.destroy({
             where: {
-                id: req.params.id
-            }
+                id: req.params.id,
+            },
         })
 
         res.status(204).end()

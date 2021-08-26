@@ -1,4 +1,5 @@
 const { User, Package, Booking, Response } = require('../models')
+const Upload = require('./upload')
 
 async function getBooking(req, res) {
     const booking = await Booking.findByPk(req.params.id)
@@ -24,7 +25,7 @@ async function getBooking(req, res) {
             sname: user.sname,
             phone: user.phone,
             username: user.username,
-            password: user.password
+            password: user.password,
         },
         package: {
             id: package.id,
@@ -32,8 +33,8 @@ async function getBooking(req, res) {
             price: package.price,
             value: package.value,
             img: package.img,
-            des: package.des
-        }
+            des: package.des,
+        },
     }
     return res.status(200).json(Response)
 }
@@ -64,7 +65,7 @@ async function getBookings(req, res) {
                 sname: user.sname,
                 phone: user.phone,
                 username: user.username,
-                password: user.password
+                password: user.password,
             },
             package: {
                 id: package.id,
@@ -72,8 +73,8 @@ async function getBookings(req, res) {
                 price: package.price,
                 value: package.value,
                 img: package.img,
-                des: package.des
-            }
+                des: package.des,
+            },
         }
         ArrayBooking.push(Response.data)
     }
@@ -84,33 +85,32 @@ async function addBooking(req, res) {
     const {
         value,
         price,
-        bookingDate,
-        travelDate,
-
-        payment,
+        booking_date,
+        travel_date,
         status,
-        packageId,
-        userId
+        package_id,
+        user_id,
     } = req.body
+    const file = req.file
     try {
-        const result = await Booking.create({
+        const payment = await Upload(file)
+        const booking = await Booking.create({
             value: value,
             price: price,
-            booking_date: bookingDate,
-            travel_date: travelDate,
+            booking_date: booking_date,
+            travel_date: travel_date,
             payment: payment,
             status: status,
-            package_id: packageId,
-            user_id: userId
+            package_id: package_id,
+            user_id: user_id,
         })
         Response.status = 'success'
-        Response.data = result.dataValues
+        Response.data = booking.dataValues
 
         res.status(200).send(Response)
     } catch (error) {
         Response.status = 'fail'
         Response.data = error.errors
-
         return res.status(400).json(Response)
     }
 }
@@ -124,8 +124,8 @@ async function deleteBooking(req, res) {
     } else {
         await Booking.destroy({
             where: {
-                id: req.params.id
-            }
+                id: req.params.id,
+            },
         })
         res.status(204).send()
     }
@@ -135,6 +135,5 @@ module.exports = {
     getBooking,
     getBookings,
     addBooking,
-
-    deleteBooking
+    deleteBooking,
 }

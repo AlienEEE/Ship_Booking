@@ -6,35 +6,35 @@ const Package = sequelize.define(
         name: {
             field: 'package_name',
             type: DataTypes.STRING(5),
-            allowNull: false
+            allowNull: false,
         },
         price: {
             field: 'package_price',
             type: DataTypes.FLOAT,
-            allowNull: false
+            allowNull: false,
         },
         value: {
             field: 'package_value',
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
         },
         img: {
             field: 'package_img',
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
         },
         des: {
-            field: 'package_price',
+            field: 'package_des',
             type: DataTypes.TEXT,
-            allowNull: true
+            allowNull: false,
         },
         raft_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
-        }
+            allowNull: false,
+        },
     },
     {
-        tableName: 'packages'
+        tableName: 'packages',
     }
 )
 module.exports = Package

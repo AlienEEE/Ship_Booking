@@ -4,13 +4,13 @@ const { ENV } = require('../config')
 const sequelize = new Sequelize(ENV.DB_NAME, ENV.DB_USER, ENV.DB_PASS, {
     host: ENV.DB_HOST,
     dialect: 'mysql',
-    dialectOptions: {
-        ssl: {
-            ca: ENV.DB_CA.replace(/\\n/g, '\n')
-        }
-    },
+    // dialectOptions: {
+    //     ssl: {
+    //         ca: ENV.DB_CA.replace(/\\n/g, '\n')
+    //     }
+    // },
     port: ENV.DB_PORT,
-    logging: false
+    logging: false,
 })
 async function syncAll(force = false) {
     await sequelize.sync({ force: force })
@@ -23,10 +23,10 @@ async function syncOneToMany(one, many, fk) {
         foreignKey: {
             name: fk,
             field: fk,
-            allowNull: false
+            allowNull: false,
         },
         onDelete: 'RESTRICT',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
     })
 }
 

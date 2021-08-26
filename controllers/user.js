@@ -33,7 +33,7 @@ async function addUser(req, res) {
             sname: sname,
             phone: phone,
             username: username,
-            password: password
+            password: password,
         })
 
         Response.status = 'success'
@@ -59,12 +59,12 @@ async function editUser(req, res) {
                 phone: phone,
                 role: role,
                 username: username,
-                password: password
+                password: password,
             },
             {
                 where: {
-                    id: id
-                }
+                    id: id,
+                },
             }
         )
         Response.status = 'success'
@@ -90,8 +90,8 @@ async function deleteUser(req, res) {
     } else {
         await User.destroy({
             where: {
-                id: req.params.id
-            }
+                id: req.params.id,
+            },
         })
 
         res.status(204).end()

@@ -19,14 +19,14 @@ async function getSailing(req, res) {
             id: driver.id,
             name: driver.name,
             sname: driver.sname,
-            phone: driver.phone
+            phone: driver.phone,
         },
         boat: {
             id: boat.id,
             name: boat.name,
             img: boat.img,
             type: boat.type,
-            value: boat.value
+            value: boat.value,
         },
         booking: {
             id: booking.id,
@@ -35,8 +35,8 @@ async function getSailing(req, res) {
             booking_date: booking.booking_date,
             travel_date: booking.travel_date,
             payment: booking.payment,
-            status: booking.status
-        }
+            status: booking.status,
+        },
     }
     return res.status(200).json(Response)
 }
@@ -62,14 +62,14 @@ async function getSailings(req, res) {
                 id: driver.id,
                 name: driver.name,
                 sname: driver.sname,
-                phone: driver.phone
+                phone: driver.phone,
             },
             boat: {
                 id: boat.id,
                 name: boat.name,
                 img: boat.img,
                 type: boat.type,
-                value: boat.value
+                value: boat.value,
             },
             booking: {
                 id: booking.id,
@@ -78,22 +78,23 @@ async function getSailings(req, res) {
                 booking_date: booking.booking_date,
                 travel_date: booking.travel_date,
                 payment: booking.payment,
-                status: booking.status
-            }
+                status: booking.status,
+            },
         }
         ArraySailing.push(Response.data)
     }
     return res.status(200).json(ArraySailing)
 }
 async function addSailing(req, res) {
-    const { departDate, returnDate, driverId, boatId, bookingId } = req.body
+    const { depart_date, return_date, driver_id, boat_id, booking_id } =
+        req.body
     try {
         const result = await Sailing.create({
-            depart_date: departDate,
-            return_date: returnDate,
-            driver_id: driverId,
-            boat_id: boatId,
-            booking_id: bookingId
+            depart_date: depart_date,
+            return_date: return_date,
+            driver_id: driver_id,
+            boat_id: boat_id,
+            booking_id: booking_id,
         })
         Response.status = 'success'
         Response.data = result.dataValues
@@ -114,12 +115,12 @@ async function editSailing(req, res) {
                 return_date: returnDate,
                 driver_id: driverId,
                 boat_id: boatId,
-                booking_id: bookingId
+                booking_id: bookingId,
             },
             {
                 where: {
-                    id: id
-                }
+                    id: id,
+                },
             }
         )
         Response.status = 'success'
@@ -141,8 +142,8 @@ async function deleteSailing(req, res) {
     } else {
         await Sailing.destroy({
             where: {
-                id: req.params.id
-            }
+                id: req.params.id,
+            },
         })
         res.status(204).send()
     }
@@ -153,5 +154,5 @@ module.exports = {
     getSailings,
     addSailing,
     editSailing,
-    deleteSailing
+    deleteSailing,
 }
