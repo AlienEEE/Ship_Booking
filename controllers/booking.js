@@ -15,8 +15,8 @@ async function getBooking(req, res) {
         id: booking.id,
         price: booking.price,
         value: booking.value,
-        booking_date: booking.booking_date,
         travel_date: booking.travel_date,
+        travelback_date: booking.travelback_date,
         payment: booking.payment,
         status: booking.status,
         user: {
@@ -55,8 +55,8 @@ async function getBookings(req, res) {
             id: i.id,
             price: i.price,
             value: i.value,
-            booking_date: i.booking_date,
             travel_date: i.travel_date,
+            travelback_date: i.travelback_date,
             payment: i.payment,
             status: i.status,
             user: {
@@ -85,20 +85,21 @@ async function addBooking(req, res) {
     const {
         value,
         price,
-        booking_date,
         travel_date,
+        travelback_date,
         status,
         package_id,
         user_id,
     } = req.body
     const file = req.file
+    console.log(req.body)
     try {
         const payment = await Upload(file)
         const booking = await Booking.create({
             value: value,
             price: price,
-            booking_date: booking_date,
             travel_date: travel_date,
+            travelback_date: travelback_date,
             payment: payment,
             status: status,
             package_id: package_id,

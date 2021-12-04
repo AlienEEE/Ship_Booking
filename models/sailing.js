@@ -5,29 +5,29 @@ const Sailing = sequelize.define(
     {
         depart_date: {
             field: 'sailing_depart_date',
-            type: DataTypes.DATE,
-            allowNull: false
+            type: DataTypes.DATEONLY,
+            allowNull: false,
         },
         return_date: {
             field: 'sailing_return_date',
-            type: DataTypes.DATE,
-            allowNull: false
+            type: DataTypes.DATEONLY,
+            allowNull: false,
         },
         driver_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
         },
         boat_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
         },
         booking_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
-        }
+            allowNull: false,
+        },
     },
     {
-        tableName: 'sailings'
+        tableName: 'sailings',
     }
 )
 module.exports = Sailing

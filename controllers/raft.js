@@ -53,7 +53,6 @@ async function addRaft(req, res) {
 async function editRaft(req, res) {
     const { name, des, id } = req.body
     const file = req.file
-
     try {
         const img = await Upload(file)
 

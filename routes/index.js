@@ -6,14 +6,16 @@ const Packages = require('./package')
 const Bookings = require('./booking')
 const Sailings = require('./sailing')
 const Reviews = require('./review')
+const Login = require('./login')
 
 module.exports = {
-  Users,
-  Rafts,
-  Boats,
-  Drivers,
-  Packages,
-  Bookings,
-  Sailings,
-  Reviews
+    Users,
+    Rafts,
+    Boats,
+    Drivers,
+    Packages,
+    Bookings,
+    Sailings,
+    Reviews,
+    Login,
 }

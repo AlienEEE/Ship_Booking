@@ -1,4 +1,5 @@
 const { User, Review, Response } = require('../models')
+const Upload = require('./upload')
 
 async function getReview(req, res) {
     const review = await Review.findByPk(req.params.id)
@@ -15,6 +16,7 @@ async function getReview(req, res) {
         id: review.id,
         detail: review.detail,
         rank: review.rank,
+        img: review.img,
         user: {
             id: user.id,
             name: user.name,
@@ -47,6 +49,7 @@ async function getReviews(req, res) {
             id: i.id,
             detail: i.detail,
             rank: i.rank,
+            img: i.img,
             user: {
                 id: user.id,
                 name: user.name,
@@ -65,12 +68,14 @@ async function getReviews(req, res) {
 
 async function addReview(req, res) {
     const { detail, rank, user_id } = req.body
-
+    const file = req.file
     try {
+        const img = await Upload(file)
         const review = await Review.create({
             detail: detail,
             rank: rank,
             user_id: user_id,
+            img: img,
         })
 
         Response.status = 'success'

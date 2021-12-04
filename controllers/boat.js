@@ -54,9 +54,10 @@ async function addBoat(req, res) {
 async function editBoat(req, res) {
     const { name, type, value, id } = req.body
     const file = req.file
-
+    console.log(req.body)
     try {
         const img = await Upload(file)
+
         const boat = await Boat.update(
             {
                 name: name,

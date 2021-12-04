@@ -14,14 +14,14 @@ const Booking = sequelize.define(
             type: DataTypes.FLOAT,
             allowNull: false,
         },
-        booking_date: {
-            field: 'booking_date',
-            type: DataTypes.DATE,
-            allowNull: false,
-        },
         travel_date: {
             field: 'travel_date',
             type: DataTypes.DATE,
+            allowNull: false,
+        },
+        travelback_date: {
+            field: 'travelback_date',
+            type: DataTypes.DATEONLY,
             allowNull: false,
         },
         payment: {

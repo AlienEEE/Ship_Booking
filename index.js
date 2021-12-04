@@ -13,6 +13,7 @@ const {
     Bookings,
     Sailings,
     Reviews,
+    Login,
 } = require('./routes')
 const { ENV } = require('./config')
 const {
@@ -44,6 +45,7 @@ async function startApp() {
     app.use('/booking', Bookings)
     app.use('/sailing', Sailings)
     app.use('/review', Reviews)
+    app.use('/login', Login)
 
     await syncOneToMany(Raft, Package, 'raft_id')
     await syncOneToMany(Package, Booking, 'package_id')

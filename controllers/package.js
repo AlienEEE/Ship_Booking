@@ -93,7 +93,10 @@ async function addPackage(req, res) {
 
 async function editPackage(req, res) {
     const { name, price, value, des, img, raftId, id } = req.body
+    const file = req.file
     try {
+        const img = await Upload(file)
+
         const package = await Package.update(
             {
                 name: name,

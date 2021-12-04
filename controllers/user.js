@@ -26,7 +26,11 @@ async function getUsers(req, res) {
 
 async function addUser(req, res) {
     const { name, sname, phone, username, password } = req.body
-
+    const userX = await User.findOne({ where: { username: username } })
+    if (userX != null) {
+        Response.status = 'fail'
+        return res.status(403).json(Response)
+    }
     try {
         const user = await User.create({
             name: name,
@@ -35,7 +39,6 @@ async function addUser(req, res) {
             username: username,
             password: password,
         })
-
         Response.status = 'success'
         Response.data = user.dataValues
 
@@ -93,6 +96,12 @@ async function deleteUser(req, res) {
                 id: req.params.id,
             },
         })
+            .then(() => {
+                return res.status(204).end()
+            })
+            .catch(() => {
+                return res.status(502).send('ไม่สามารถลบชื่อผู้ใช้ได้')
+            })
 
         res.status(204).end()
     }

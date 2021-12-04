@@ -7,20 +7,25 @@ const Review = sequelize.define(
         detail: {
             field: 'review_detail',
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
         },
         rank: {
             field: 'review_rank',
             type: DataTypes.INTEGER,
-            allowNull: false
+            allowNull: false,
+        },
+        img: {
+            field: 'review_img',
+            type: DataTypes.TEXT,
+            allowNull: false,
         },
         user_id: {
             type: DataTypes.INTEGER,
-            allowNull: false
-        }
+            allowNull: false,
+        },
     },
     {
-        tableName: 'reviews'
+        tableName: 'reviews',
     }
 )
 module.exports = Review
