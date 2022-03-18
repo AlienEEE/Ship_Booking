@@ -7,21 +7,21 @@ const Raft = sequelize.define(
         name: {
             field: 'raft_name',
             type: DataTypes.STRING(20),
-            allowNull: false
+            allowNull: false,
         },
         img: {
             field: 'raft_img',
             type: DataTypes.TEXT,
-            allowNull: false
+            allowNull: false,
         },
         des: {
             field: 'raft_des',
             type: DataTypes.TEXT,
-            allowNull: false
-        }
+            allowNull: false,
+        },
     },
     {
-        tableName: 'rafts'
+        tableName: 'rafts',
     }
 )
 module.exports = Raft

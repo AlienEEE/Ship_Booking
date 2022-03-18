@@ -116,6 +116,31 @@ async function addBooking(req, res) {
     }
 }
 
+async function editBooking(req, res) {
+    const { status, id } = req.body
+    try {
+        const booking = await Booking.update(
+            {
+                status: status,
+            },
+            {
+                where: {
+                    id: id,
+                },
+            }
+        )
+        Response.status = 'success'
+        Response.data = booking
+
+        res.status(200).json(Response)
+    } catch (error) {
+        Response.status = 'fail'
+        Response.data = error.errors[0]
+
+        return res.status(400).json(Response)
+    }
+}
+
 async function deleteBooking(req, res) {
     const booking = await Booking.findByPk(req.params.id)
     if (booking === null) {
@@ -136,5 +161,6 @@ module.exports = {
     getBooking,
     getBookings,
     addBooking,
+    editBooking,
     deleteBooking,
 }

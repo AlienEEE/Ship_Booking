@@ -7,33 +7,33 @@ const Booking = sequelize.define(
         value: {
             field: 'booking_value',
             type: DataTypes.INTEGER,
-            allowNull: false,
+            allowNull: true,
         },
         price: {
             field: 'booking_price',
             type: DataTypes.FLOAT,
-            allowNull: false,
+            allowNull: true,
         },
         travel_date: {
             field: 'travel_date',
             type: DataTypes.DATE,
-            allowNull: false,
+            allowNull: true,
         },
         travelback_date: {
             field: 'travelback_date',
             type: DataTypes.DATEONLY,
-            allowNull: false,
+            allowNull: true,
         },
         payment: {
             field: 'booking_payment',
             type: DataTypes.TEXT,
-            allowNull: false,
+            allowNull: true,
         },
         status: {
             field: 'booking_status',
             type: DataTypes.STRING(20),
             allowNull: false,
-            defaultValue: 'กำลังตรวจสอบ',
+            defaultValue: 'รอพิจารณา',
         },
         package_id: {
             type: DataTypes.INTEGER,

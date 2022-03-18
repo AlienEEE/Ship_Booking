@@ -26,8 +26,8 @@ async function getUsers(req, res) {
 
 async function addUser(req, res) {
     const { name, sname, phone, username, password } = req.body
-    const userX = await User.findOne({ where: { username: username } })
-    if (userX != null) {
+    const user = await User.findOne({ where: { username: username } })
+    if (user != null) {
         Response.status = 'fail'
         return res.status(403).json(Response)
     }

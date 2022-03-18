@@ -4,6 +4,7 @@ const {
     getBooking,
     getBookings,
     addBooking,
+    editBooking,
     deleteBooking,
 } = require('../controllers/booking')
 const multer = require('multer')
@@ -14,6 +15,7 @@ const formData = multer({
 router.get('/:id', getBooking)
 router.get('/', getBookings)
 router.post('/', formData.single('file'), addBooking)
+router.put('/', editBooking)
 router.delete('/:id', deleteBooking)
 
 module.exports = router
