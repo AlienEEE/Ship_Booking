@@ -5,7 +5,7 @@ const Package = sequelize.define(
     {
         name: {
             field: 'package_name',
-            type: DataTypes.STRING(5),
+            type: DataTypes.STRING(20),
             allowNull: false,
         },
         price: {

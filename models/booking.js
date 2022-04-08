@@ -33,7 +33,7 @@ const Booking = sequelize.define(
             field: 'booking_status',
             type: DataTypes.STRING(20),
             allowNull: false,
-            defaultValue: 'รอพิจารณา',
+            defaultValue: 'ยังไม่ทำการชำระเงิน',
         },
         package_id: {
             type: DataTypes.INTEGER,

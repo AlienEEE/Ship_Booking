@@ -1,6 +1,6 @@
 const { User, Package, Booking, Response } = require('../models')
 const Upload = require('./upload')
-
+const { Op } = require('sequelize')
 async function getBooking(req, res) {
     const booking = await Booking.findByPk(req.params.id)
     if (booking === null) {
@@ -40,7 +40,19 @@ async function getBooking(req, res) {
 }
 
 async function getBookings(req, res) {
-    const bookings = await Booking.findAll()
+    const { startOfDay, endOfDay } = req.body
+    let bookings
+    if (typeof startOfDay === 'undefined') {
+        bookings = await Booking.findAll()
+    } else {
+        bookings = await Booking.findAll({
+            where: {
+                travel_date: {
+                    [Op.between]: [startOfDay, endOfDay],
+                },
+            },
+        })
+    }
     if (bookings === null) {
         Response.status = 'fail'
         Response.data = 'Not found'
@@ -55,8 +67,10 @@ async function getBookings(req, res) {
             id: i.id,
             price: i.price,
             value: i.value,
-            travel_date: i.travel_date,
-            travelback_date: i.travelback_date,
+            travel_date: i.travel_date.toLocaleString('th-TH'),
+            travelback_date: new Date(
+                Date.parse(i.travelback_date)
+            ).toLocaleDateString('th-TH'),
             payment: i.payment,
             status: i.status,
             user: {
@@ -88,13 +102,11 @@ async function addBooking(req, res) {
         travel_date,
         travelback_date,
         status,
+        payment,
         package_id,
         user_id,
     } = req.body
-    const file = req.file
-    console.log(req.body)
     try {
-        const payment = await Upload(file)
         const booking = await Booking.create({
             value: value,
             price: price,
@@ -118,17 +130,35 @@ async function addBooking(req, res) {
 
 async function editBooking(req, res) {
     const { status, id } = req.body
+    const file = req.file
+    let booking
     try {
-        const booking = await Booking.update(
-            {
-                status: status,
-            },
-            {
-                where: {
-                    id: id,
+        if (file == null) {
+            booking = await Booking.update(
+                {
+                    status: status,
                 },
-            }
-        )
+                {
+                    where: {
+                        id: id,
+                    },
+                }
+            )
+        } else {
+            const payment = await Upload(file)
+            booking = await Booking.update(
+                {
+                    status: status,
+                    payment: payment,
+                },
+                {
+                    where: {
+                        id: id,
+                    },
+                }
+            )
+        }
+
         Response.status = 'success'
         Response.data = booking
 

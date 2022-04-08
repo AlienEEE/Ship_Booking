@@ -14,11 +14,13 @@ const {
     Sailings,
     Reviews,
     Login,
+    Confirms,
 } = require('./routes')
 const { ENV } = require('./config')
 const {
     syncAll,
     syncOneToMany,
+    // syncOneToOne,
     Raft,
     Package,
     Boat,
@@ -27,6 +29,7 @@ const {
     Booking,
     Review,
     User,
+    Confirm,
 } = require('./models')
 
 async function startApp() {
@@ -46,14 +49,16 @@ async function startApp() {
     app.use('/sailing', Sailings)
     app.use('/review', Reviews)
     app.use('/login', Login)
+    app.use('/confirm', Confirms)
 
     await syncOneToMany(Raft, Package, 'raft_id')
     await syncOneToMany(Package, Booking, 'package_id')
     await syncOneToMany(User, Booking, 'user_id')
     await syncOneToMany(Driver, Sailing, 'driver_id')
     await syncOneToMany(Boat, Sailing, 'boat_id')
-    await syncOneToMany(Booking, Sailing, 'booking_id')
     await syncOneToMany(User, Review, 'user_id')
+    await syncOneToMany(Booking, Confirm, 'booking_id')
+    await syncOneToMany(Sailing, Confirm, 'sailing_id')
 
     await syncAll()
 

@@ -14,8 +14,8 @@ const formData = multer({
 
 router.get('/:id', getBooking)
 router.get('/', getBookings)
-router.post('/', formData.single('file'), addBooking)
-router.put('/', editBooking)
+router.post('/', addBooking)
+router.put('/', formData.single('file'), editBooking)
 router.delete('/:id', deleteBooking)
 
 module.exports = router

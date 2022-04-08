@@ -53,21 +53,36 @@ async function addRaft(req, res) {
 async function editRaft(req, res) {
     const { name, des, id } = req.body
     const file = req.file
+    let raft
     try {
-        const img = await Upload(file)
-
-        const raft = await Raft.update(
-            {
-                name: name,
-                img: img,
-                des: des,
-            },
-            {
-                where: {
-                    id: id,
+        if (file == null) {
+            raft = await Raft.update(
+                {
+                    name: name,
+                    des: des,
                 },
-            }
-        )
+                {
+                    where: {
+                        id: id,
+                    },
+                }
+            )
+        } else {
+            const img = await Upload(file)
+            raft = await Raft.update(
+                {
+                    name: name,
+                    img: img,
+                    des: des,
+                },
+                {
+                    where: {
+                        id: id,
+                    },
+                }
+            )
+        }
+
         Response.status = 'success'
         Response.data = raft.dataValues
 

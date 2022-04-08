@@ -54,23 +54,37 @@ async function addBoat(req, res) {
 async function editBoat(req, res) {
     const { name, type, value, id } = req.body
     const file = req.file
-    console.log(req.body)
+    let boat
     try {
-        const img = await Upload(file)
-
-        const boat = await Boat.update(
-            {
-                name: name,
-                img: img,
-                type: type,
-                value: value,
-            },
-            {
-                where: {
-                    id: id,
+        if (file == null) {
+            boat = await Boat.update(
+                {
+                    name: name,
+                    type: type,
+                    value: value,
                 },
-            }
-        )
+                {
+                    where: {
+                        id: id,
+                    },
+                }
+            )
+        } else {
+            const img = await Upload(file)
+            boat = await Boat.update(
+                {
+                    name: name,
+                    img: img,
+                    type: type,
+                    value: value,
+                },
+                {
+                    where: {
+                        id: id,
+                    },
+                }
+            )
+        }
 
         Response.status = 'success'
         Response.data = boat

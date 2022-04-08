@@ -25,12 +25,13 @@ async function getDrivers(req, res) {
 }
 
 async function addDriver(req, res) {
-    const { name, sname, phone } = req.body
+    const { name, sname, phone, short } = req.body
     try {
         const driver = await Driver.create({
             name: name,
             sname: sname,
-            phone: phone
+            phone: phone,
+            short: short,
         })
         Response.status = 'success'
         Response.data = driver.dataValues
@@ -44,18 +45,19 @@ async function addDriver(req, res) {
 }
 
 async function editDriver(req, res) {
-    const { name, sname, phone, id } = req.body
+    const { name, sname, phone, id, short } = req.body
     try {
         const driver = await Driver.update(
             {
                 name: name,
                 sname: sname,
-                phone: phone
+                phone: phone,
+                short: short,
             },
             {
                 where: {
-                    id: id
-                }
+                    id: id,
+                },
             }
         )
         Response.status = 'success'
@@ -80,8 +82,8 @@ async function deleteDriver(req, res) {
     } else {
         await Driver.destroy({
             where: {
-                id: req.params.id
-            }
+                id: req.params.id,
+            },
         })
 
         res.status(204).end()

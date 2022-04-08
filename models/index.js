@@ -6,6 +6,7 @@ const Package = require('./package')
 const Sailing = require('./sailing')
 const Booking = require('./booking')
 const Review = require('./review')
+const Confirm = require('./confirm')
 
 const { sequelize, syncAll, syncOne, syncOneToMany } = require('./database')
 const Response = require('./response')
@@ -20,10 +21,11 @@ module.exports = {
     Sailing,
     Booking,
     Review,
+    Confirm,
     sequelize,
     syncAll,
     syncOne,
     syncOneToMany,
     Response,
-    Bucket
+    Bucket,
 }

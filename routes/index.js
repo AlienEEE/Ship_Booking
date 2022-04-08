@@ -7,6 +7,7 @@ const Bookings = require('./booking')
 const Sailings = require('./sailing')
 const Reviews = require('./review')
 const Login = require('./login')
+const Confirms = require('./confirm')
 
 module.exports = {
     Users,
@@ -18,4 +19,5 @@ module.exports = {
     Sailings,
     Reviews,
     Login,
+    Confirms,
 }

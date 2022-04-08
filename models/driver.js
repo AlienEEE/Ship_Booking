@@ -7,21 +7,26 @@ const Driver = sequelize.define(
         name: {
             field: 'driver_name',
             type: DataTypes.STRING(20),
-            allowNull: false
+            allowNull: false,
         },
         sname: {
             field: 'driver_sname',
             type: DataTypes.STRING(20),
-            allowNull: false
+            allowNull: false,
         },
         phone: {
             field: 'driver_phone',
             type: DataTypes.STRING(10),
-            allowNull: false
-        }
+            allowNull: false,
+        },
+        short: {
+            field: 'drive_short',
+            type: DataTypes.STRING(3),
+            allowNull: false,
+        },
     },
     {
-        tableName: 'drivers'
+        tableName: 'drivers',
     }
 )
 module.exports = Driver

@@ -94,24 +94,42 @@ async function addPackage(req, res) {
 async function editPackage(req, res) {
     const { name, price, value, des, img, raftId, id } = req.body
     const file = req.file
+    let package
     try {
-        const img = await Upload(file)
-
-        const package = await Package.update(
-            {
-                name: name,
-                price: price,
-                value: value,
-                des: des,
-                img: img,
-                raft_id: raftId,
-            },
-            {
-                where: {
-                    id: id,
+        if (file == null) {
+            package = await Package.update(
+                {
+                    name: name,
+                    price: price,
+                    value: value,
+                    des: des,
+                    img: img,
+                    raft_id: raftId,
                 },
-            }
-        )
+                {
+                    where: {
+                        id: id,
+                    },
+                }
+            )
+        } else {
+            const img = await Upload(file)
+            package = await Package.update(
+                {
+                    name: name,
+                    price: price,
+                    value: value,
+                    des: des,
+                    img: img,
+                    raft_id: raftId,
+                },
+                {
+                    where: {
+                        id: id,
+                    },
+                }
+            )
+        }
 
         Response.status = 'success'
         Response.data = package

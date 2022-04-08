@@ -1,4 +1,4 @@
-const { Boat, Driver, Booking, Sailing, Response } = require('../models')
+const { Boat, Driver, Sailing, Response } = require('../models')
 
 async function getSailing(req, res) {
     const sailing = await Sailing.findByPk(req.params.id)
@@ -9,17 +9,16 @@ async function getSailing(req, res) {
     }
     const driver = await Driver.findByPk(sailing.driver_id)
     const boat = await Boat.findByPk(sailing.boat_id)
-    const booking = await Booking.findByPk(sailing.booking_id)
     Response.status = 'success'
     Response.data = {
         id: sailing.id,
-        depart_date: sailing.depart_date,
-        return_date: sailing.return_date,
+        name: sailing.sailing_name,
         driver: {
             id: driver.id,
             name: driver.name,
             sname: driver.sname,
             phone: driver.phone,
+            short: driver.short,
         },
         boat: {
             id: boat.id,
@@ -27,15 +26,6 @@ async function getSailing(req, res) {
             img: boat.img,
             type: boat.type,
             value: boat.value,
-        },
-        booking: {
-            id: booking.id,
-            price: booking.price,
-            value: booking.value,
-            travelback_date: booking.travelback_date,
-            travel_date: booking.travel_date,
-            payment: booking.payment,
-            status: booking.status,
         },
     }
     return res.status(200).json(Response)
@@ -52,17 +42,16 @@ async function getSailings(req, res) {
     for (const i of sailings) {
         const driver = await Driver.findByPk(i.driver_id)
         const boat = await Boat.findByPk(i.boat_id)
-        const booking = await Booking.findByPk(i.booking_id)
         Response.status = 'success'
         Response.data = {
             id: i.id,
-            depart_date: i.depart_date,
-            return_date: i.return_date,
+            name: i.name,
             driver: {
                 id: driver.id,
                 name: driver.name,
                 sname: driver.sname,
                 phone: driver.phone,
+                short: driver.short,
             },
             boat: {
                 id: boat.id,
@@ -71,33 +60,21 @@ async function getSailings(req, res) {
                 type: boat.type,
                 value: boat.value,
             },
-            booking: {
-                id: booking.id,
-                price: booking.price,
-                value: booking.value,
-                travelback_date: booking.travelback_date,
-                travel_date: booking.travel_date,
-                payment: booking.payment,
-                status: booking.status,
-            },
         }
         ArraySailing.push(Response.data)
     }
     return res.status(200).json(ArraySailing)
 }
 async function addSailing(req, res) {
-    const { depart_date, return_date, driver_id, boat_id, booking_id } =
-        req.body
+    const { name, driver_id, boat_id } = req.body
     try {
-        const result = await Sailing.create({
-            depart_date: depart_date,
-            return_date: return_date,
+        const sailing = await Sailing.create({
+            name: name,
             driver_id: driver_id,
             boat_id: boat_id,
-            booking_id: booking_id,
         })
         Response.status = 'success'
-        Response.data = result.dataValues
+        Response.data = sailing.dataValues
         res.status(200).send(Response)
     } catch (error) {
         Response.status = 'fail'
@@ -107,15 +84,13 @@ async function addSailing(req, res) {
 }
 
 async function editSailing(req, res) {
-    const { departDate, returnDate, driverId, boatId, bookingId, id } = req.body
+    const { name, driverId, boatId, id } = req.body
     try {
-        const result = await Sailing.update(
+        const sailing = await Sailing.update(
             {
-                depart_date: departDate,
-                return_date: returnDate,
+                name: name,
                 driver_id: driverId,
                 boat_id: boatId,
-                booking_id: bookingId,
             },
             {
                 where: {
@@ -124,7 +99,7 @@ async function editSailing(req, res) {
             }
         )
         Response.status = 'success'
-        Response.data = result
+        Response.data = sailing
         res.send(Response)
     } catch (error) {
         Response.status = 'fail'
